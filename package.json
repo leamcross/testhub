@@ -1,0 +1,8 @@
+{
+  "name": "testhub-uz",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@netlify/database": "^1.0.0"
+  }
+}
