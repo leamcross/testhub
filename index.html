@@ -6,6 +6,16 @@
 <title>TestHub UZ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- ✅ Google Analytics - O'z Measurement ID ingizni qo'ying (G-XXXXXXXXXX) -->
+<!-- analytics.google.com → Admin → Data Streams → Web stream → Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 <style>
 :root{
   --bg:#07080e;--surf:#0f1219;--card:#151a26;--brd:#1d2235;
@@ -1144,6 +1154,11 @@ function toast(msg,ms=2600){
   clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove("show"),ms);
 }
 
+// ═══════ FIREBASE CONFIG ═══════
+// ⚠️ Bu yerga o'z Firebase URL ingizni qo'ying
+// Firebase console → Realtime Database → URL ko'rinishi: https://LOYIHA-default-rtdb.firebaseio.com
+const FB_URL = "https://testhub-1ef80-default-rtdb.firebaseio.com";
+
 // ═══════ LOCALSTORAGE (asosiy saqlash) ═══════
 function lsGet(){try{return JSON.parse(localStorage.getItem("th_scores")||"{}");}catch{return{};}}
 function lsSave(d){try{localStorage.setItem("th_scores",JSON.stringify(d));}catch{}}
@@ -1300,9 +1315,17 @@ function saveScore(subKey,correct,pct){
   } else {
     toast("ℹ️ Oldingi natijangiz yaxshiroq: "+prev.pct+"%");
   }
-  // Sync best score to cloud (server keeps only the best per subject)
-  fetch('/api/scores',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({userName:uName,subKey,correct,pct})}).catch(()=>{});
+  // Firebase ga saqlash (hamma ko'rishi uchun)
+  const userKey=fbKey(uName);
+  const scorePayload={};
+  scorePayload[subKey]={correct,pct};
+  fetch(`${FB_URL}/scores/${userKey}/scores.json`,{
+    method:'PATCH',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(scorePayload)
+  }).then(()=>fetch(`${FB_URL}/scores/${userKey}/name.json`,{
+    method:'PUT',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(uName)
+  })).catch(()=>{});
   loadBests();
 }
 
@@ -1401,11 +1424,11 @@ function renderLB(){
   const lt=document.getElementById("lt");
   lt.innerHTML='<div style="padding:2rem;text-align:center;color:var(--mute);font-size:.88rem">⏳ Yuklanmoqda...</div>';
   buildFilters();
-  fetch('/api/scores')
+  fetch(`${FB_URL}/scores.json`)
     .then(r=>r.json())
     .then(data=>{
       document.getElementById("lb-sync").textContent="Barcha foydalanuvchilar natijalari";
-      _buildLBHtml(data);
+      _buildLBHtml(data||{});
     })
     .catch(()=>{
       document.getElementById("lb-sync").textContent="Qurilmadagi natijalar (offline)";
