@@ -1450,6 +1450,50 @@ function confetti(){
     setTimeout(()=>d.remove(),3800);
   }
 }
+// ═══ FIREBASE REYTING ═══
+const DB_URL = "https://testhub-8c690-default-rtdb.firebaseio.com";
+function fbKey(n){return n.trim().replace(/[.#$\[\]\/\s]/g,"_").substring(0,40);}
+
+async function saveScore(subjectKey, correct, pct){
+  try{
+      const local=JSON.parse(localStorage.getItem("th_sc")||"{}");
+          if(!local[userName])local[userName]={name:userName,scores:{}};
+              const prev=local[userName].scores[subjectKey];
+                  if(!prev||pct>=prev.pct){
+                        local[userName].scores[subjectKey]={correct,pct,ts:Date.now()};
+                              localStorage.setItem("th_sc",JSON.stringify(local));
+                                  }
+                                    }catch(e){}
+                                      try{
+                                          const key=fbKey(userName);
+                                              const r=await fetch(DB_URL+"/scores/"+key+".json");
+                                                  let data=await r.json();
+                                                      if(!data||typeof data!=="object")data={name:userName,scores:{}};
+                                                          if(!data.scores)data.scores={};
+                                                              const prev=data.scores[subjectKey];
+                                                                  if(!prev||pct>=prev.pct){
+                                                                        data.name=userName;
+                                                                              data.scores[subjectKey]={correct,pct,ts:Date.now()};
+                                                                                    await fetch(DB_URL+"/scores/"+key+".json",{
+                                                                                            method:"PUT",headers:{"Content-Type":"application/json"},
+                                                                                                    body:JSON.stringify(data)
+                                                                                                          });
+                                                                                                              }
+                                                                                                                }catch(e){}
+                                                                                                                }
+
+                                                                                                                async function loadAllScores(){
+                                                                                                                  const local=Object.values(JSON.parse(localStorage.getItem("th_sc")||"{}"));
+                                                                                                                    try{
+                                                                                                                        const r=await fetch(DB_URL+"/scores.json");
+                                                                                                                            const data=await r.json();
+                                                                                                                                if(!data||typeof data!=="object")return local;
+                                                                                                                                    const remote=Object.values(data);
+                                                                                                                                        const rNames=new Set(remote.map(u=>fbKey(u.name||"")));
+                                                                                                                                            local.forEach(u=>{if(!rNames.has(fbKey(u.name||"")))remote.push(u);});
+                                                                                                                                                return remote;
+                                                                                                                                                  }catch(e){return local;}
+                                                                                                                                                  }
 </script>
 </body>
 </html>
