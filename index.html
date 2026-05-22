@@ -2,13 +2,16 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TestHub UZ</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#06080f">
+<meta name="description" content="TestHub UZ — Bilimingizni sinang. 5 fan, 600+ savol, jonli reyting.">
+<title>TestHub UZ — Bilim platformasi</title>
 
-<!-- ✅ Google Analytics - O'z Measurement ID ingizni qo'ying (G-XXXXXXXXXX) -->
-<!-- analytics.google.com → Admin → Data Streams → Web stream → Measurement ID -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -16,352 +19,1786 @@
   gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX');
 </script>
+
 <style>
-:root{
-  --bg:#07080e;--surf:#0f1219;--card:#151a26;--brd:#1d2235;
-  --acc:#5b7fff;--a2:#9b7fe8;--gold:#f0b429;
-  --grn:#1db954;--red:#e74c3c;--pink:#f472b6;
-  --txt:#dde3ff;--mute:#4e5778;--r:13px;
-  --sh:0 4px 24px rgba(0,0,0,.4);
+/* ════════════════════════════════════════════════════════════
+   DESIGN TOKENS — DARK (default)
+   ════════════════════════════════════════════════════════════ */
+:root, [data-theme="dark"]{
+  /* Surfaces */
+  --bg:#06080f;
+  --bg-2:#0a0d18;
+  --surf:#0f1320;
+  --card:#141828;
+  --card-2:#181d31;
+  --brd:#222842;
+  --brd-2:#2d3454;
+
+  /* Brand */
+  --acc:#5b7fff;
+  --acc-d:#3d5fe0;
+  --a2:#a78bfa;
+  --a3:#22d3ee;
+
+  /* Semantic */
+  --grn:#10b981;
+  --gold:#fbbf24;
+  --red:#ef4444;
+  --pink:#f472b6;
+  --orange:#fb923c;
+
+  /* Text */
+  --txt:#e7ecff;
+  --txt-2:#b8c0e8;
+  --mute:#6b7396;
+  --mute-2:#4a5179;
+
+  /* Background overlays */
+  --aurora-1:rgba(91,127,255,.15);
+  --aurora-2:rgba(167,139,250,.12);
+  --aurora-3:rgba(34,211,238,.08);
+  --grid-line:rgba(91,127,255,.04);
+  --particle-color:rgba(91,127,255,.18);
+
+  /* Radii */
+  --r-xs:8px;
+  --r-sm:11px;
+  --r-md:14px;
+  --r-lg:18px;
+  --r-xl:24px;
+
+  /* Shadows */
+  --sh-sm:0 2px 8px rgba(0,0,0,.3);
+  --sh:0 8px 32px rgba(0,0,0,.35);
+  --sh-lg:0 20px 60px rgba(0,0,0,.5);
+  --sh-glow:0 0 40px rgba(91,127,255,.25);
+
+  /* Easing */
+  --ease:cubic-bezier(.4,0,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
 }
+
+/* ════════════════════════════════════════════════════════════
+   DESIGN TOKENS — LIGHT
+   ════════════════════════════════════════════════════════════ */
+[data-theme="light"]{
+  /* Surfaces — yumshoq oq, ko'k tarafga sezilarli */
+  --bg:#f4f6fc;
+  --bg-2:#eaeef8;
+  --surf:#ffffff;
+  --card:#ffffff;
+  --card-2:#f8faff;
+  --brd:#e2e6f0;
+  --brd-2:#d0d6e6;
+
+  /* Brand — biroz to'qroq, light fonda yaxshi ko'rinishi uchun */
+  --acc:#4c6ef0;
+  --acc-d:#3354d8;
+  --a2:#8b6dd9;
+  --a3:#0ea5b7;
+
+  /* Semantic */
+  --grn:#059669;
+  --gold:#d97706;
+  --red:#dc2626;
+  --pink:#db2777;
+  --orange:#ea580c;
+
+  /* Text */
+  --txt:#0f1535;
+  --txt-2:#3a4060;
+  --mute:#6b7396;
+  --mute-2:#9aa3c4;
+
+  /* Background overlays — light themada yumshoqroq */
+  --aurora-1:rgba(91,127,255,.18);
+  --aurora-2:rgba(167,139,250,.14);
+  --aurora-3:rgba(34,211,238,.1);
+  --grid-line:rgba(91,127,255,.06);
+  --particle-color:rgba(91,127,255,.22);
+
+  /* Shadows — light themada yumshoq soyalar */
+  --sh-sm:0 2px 8px rgba(15,21,53,.06);
+  --sh:0 8px 32px rgba(15,21,53,.08);
+  --sh-lg:0 20px 60px rgba(15,21,53,.15);
+  --sh-glow:0 0 40px rgba(76,110,240,.2);
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESET
+   ════════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-serif;
-  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+html{
+  scroll-behavior:smooth;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:"Syne",system-ui,-apple-system,sans-serif;
+  font-feature-settings:"ss01","ss02";
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  position:relative;
+  transition:background-color .6s var(--ease), color .6s var(--ease);
+}
+button{font:inherit;color:inherit;}
+input{font:inherit;}
+a{color:inherit;text-decoration:none;}
 
-/* BACKGROUND */
-.bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:orb 16s ease-in-out infinite alternate;}
-.bg-orb.o1{width:600px;height:400px;background:rgba(91,127,255,.09);top:-150px;left:-100px;}
-.bg-orb.o2{width:500px;height:350px;background:rgba(155,127,232,.07);bottom:-120px;right:-80px;animation-delay:-8s;}
-@keyframes orb{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,20px) scale(1.07);}}
-#cv{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;}
+/* Smooth theme transition uchun barcha rangli elementlar */
+.glass,.qcard,.mcard,.scard,.lb-tbl,.qv-card,.rv-card,.usr-stat,
+.modal,.pod,.inp,.sv-search,.btn-s,.chip{
+  transition:background-color .5s var(--ease), border-color .5s var(--ease), color .5s var(--ease);
+}
 
-/* SCREENS */
-.scr{position:relative;z-index:1;min-height:100vh;display:none;
-  flex-direction:column;align-items:center;padding:1.5rem 1rem 5rem;}
+/* ════════════════════════════════════════════════════════════
+   BACKGROUND ATMOSPHERE
+   ════════════════════════════════════════════════════════════ */
+.bg-layer{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+.bg-aurora{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, var(--aurora-1) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, var(--aurora-2) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, var(--aurora-3) 0%, transparent 50%);
+  animation:aurora 22s ease-in-out infinite alternate;
+  transition:opacity .6s var(--ease);
+}
+@keyframes aurora{
+  0%{transform:translate(0,0) scale(1);opacity:.85;}
+  50%{transform:translate(2%,1%) scale(1.05);opacity:1;}
+  100%{transform:translate(-1%,2%) scale(.98);opacity:.9;}
+}
+
+/* Mouse-following gradient orb — sayt yanada interaktiv */
+.bg-cursor{
+  background:radial-gradient(circle 600px at var(--mx,50%) var(--my,50%), var(--aurora-1) 0%, transparent 60%);
+  opacity:.7;
+  transition:opacity .8s var(--ease);
+  mix-blend-mode:screen;
+}
+[data-theme="light"] .bg-cursor{mix-blend-mode:multiply;opacity:.5;}
+
+@media(max-width:768px){
+  .bg-cursor{display:none;} /* Mobile-da sichqoncha yo'q */
+}
+
+.bg-grid{
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 70% 50% at 50% 50%, #000 0%, transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 50% at 50% 50%, #000 0%, transparent 80%);
+  opacity:.5;
+}
+
+.bg-grain{
+  background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity:.04;
+  mix-blend-mode:overlay;
+}
+[data-theme="light"] .bg-grain{opacity:.025;mix-blend-mode:multiply;}
+
+#cv{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;}
+[data-theme="light"] #cv{opacity:.35;}
+
+/* ════════════════════════════════════════════════════════════
+   APP LAYOUT
+   ════════════════════════════════════════════════════════════ */
+.scr{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  min-height:100dvh;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  padding:1.5rem 1.1rem 5rem;
+}
 .scr.on{display:flex;}
 
-/* ── DESIGN TOKENS ── */
-.glass{background:rgba(21,26,38,.8);backdrop-filter:blur(20px);border:1px solid var(--brd);border-radius:18px;}
-.tag{display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(91,127,255,.12);border:1px solid rgba(91,127,255,.28);
-  color:var(--acc);font-family:"DM Mono",monospace;font-size:.65rem;
-  letter-spacing:.12em;padding:.24rem .75rem;border-radius:50px;text-transform:uppercase;}
-.logo{font-size:clamp(2rem,6vw,3rem);font-weight:800;letter-spacing:-.02em;
-  background:linear-gradient(135deg,#dde3ff 0%,var(--acc) 50%,var(--a2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
-  border:none;border-radius:10px;cursor:pointer;font-family:"Syne",sans-serif;
-  font-weight:700;letter-spacing:.01em;transition:all .18s ease;white-space:nowrap;}
-.btn-p{background:linear-gradient(135deg,var(--acc),#3d5fe0);color:#fff;
-  font-size:.92rem;padding:.82rem 1.8rem;box-shadow:0 4px 20px rgba(91,127,255,.35);}
-.btn-p:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 6px 24px rgba(91,127,255,.45);}
-.btn-p:active{transform:translateY(0);}
-.btn-s{background:rgba(255,255,255,.05);border:1px solid var(--brd);
-  color:var(--txt);font-size:.82rem;padding:.6rem 1.15rem;}
-.btn-s:hover{border-color:var(--acc);color:var(--acc);background:rgba(91,127,255,.06);}
-.btn-g{background:linear-gradient(135deg,var(--grn),#17a04a);color:#fff;
-  font-size:.82rem;padding:.6rem 1.15rem;box-shadow:0 4px 16px rgba(29,185,84,.25);}
-.inp{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--brd);
-  border-radius:10px;color:var(--txt);font-family:"Syne",sans-serif;
-  font-size:.95rem;padding:.8rem 1rem;outline:none;transition:all .2s;}
-.inp:focus{border-color:var(--acc);background:rgba(91,127,255,.04);}
+@media(min-width:640px){
+  .scr{padding:2rem 1.5rem 5rem;}
+}
+
+/* Screen transition — sekin va silliq */
+.scr.entering{
+  animation:scrIn .65s cubic-bezier(.16,.84,.32,1) both;
+  will-change:opacity,transform;
+}
+@keyframes scrIn{
+  0%{opacity:0;transform:translateY(18px) scale(.985);}
+  60%{opacity:1;}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+
+/* Animatsiyani kamaytirishni xohlovchilar uchun (Apple/Android sozlamalarida) */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  .bg-aurora,.pod,.admin-avatar{animation:none!important;}
+}
+
+/* ════════════════════════════════════════════════════════════
+   PRIMITIVES
+   ════════════════════════════════════════════════════════════ */
+
+/* Glass surface */
+.glass{
+  background:linear-gradient(180deg,rgba(20,24,40,.85),rgba(15,19,32,.85));
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  border:1px solid var(--brd);
+  border-radius:var(--r-lg);
+  position:relative;
+}
+[data-theme="light"] .glass{
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(248,250,255,.88));
+  box-shadow:var(--sh-sm);
+}
+.glass::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 40%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+
+/* Tag (badge) */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  background:linear-gradient(135deg,rgba(91,127,255,.15),rgba(167,139,250,.1));
+  border:1px solid rgba(91,127,255,.3);
+  color:#c4d0ff;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.66rem;
+  letter-spacing:.1em;
+  padding:.32rem .85rem;
+  border-radius:50px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.tag-pulse{position:relative;}
+.tag-pulse::before{
+  content:"";
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--grn);
+  box-shadow:0 0 0 0 rgba(16,185,129,.7);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(16,185,129,.7);}
+  70%{box-shadow:0 0 0 8px rgba(16,185,129,0);}
+  100%{box-shadow:0 0 0 0 rgba(16,185,129,0);}
+}
+
+/* Display logo */
+.logo{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:clamp(2.5rem,8vw,4.2rem);
+  font-weight:800;
+  letter-spacing:-.04em;
+  line-height:1;
+  background:linear-gradient(135deg,#ffffff 0%,#dde3ff 30%,var(--acc) 60%,var(--a2) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 4px 24px rgba(91,127,255,.3));
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  border:none;
+  border-radius:var(--r-sm);
+  cursor:pointer;
+  font-family:"Syne",sans-serif;
+  font-weight:700;
+  letter-spacing:.005em;
+  transition:transform .2s var(--ease-spring),box-shadow .2s var(--ease),opacity .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease);
+  white-space:nowrap;
+  position:relative;
+  user-select:none;
+}
+.btn:active{transform:scale(.97);}
+
+.btn-p{
+  background:linear-gradient(135deg,var(--acc) 0%,var(--acc-d) 100%);
+  color:#fff;
+  font-size:.95rem;
+  padding:.92rem 1.9rem;
+  box-shadow:0 4px 20px rgba(91,127,255,.4),inset 0 1px 0 rgba(255,255,255,.15);
+}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,127,255,.5),inset 0 1px 0 rgba(255,255,255,.15);}
+
+.btn-s{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--brd);
+  color:var(--txt-2);
+  font-size:.84rem;
+  padding:.62rem 1.2rem;
+}
+.btn-s:hover{border-color:var(--acc);color:var(--acc);background:rgba(91,127,255,.07);}
+
+.btn-g{
+  background:linear-gradient(135deg,var(--grn),#059669);
+  color:#fff;
+  font-size:.85rem;
+  padding:.65rem 1.2rem;
+  box-shadow:0 4px 16px rgba(16,185,129,.3);
+}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(16,185,129,.4);}
+
+.btn-icon{
+  width:38px;height:38px;
+  border-radius:10px;
+  padding:0;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--brd);
+  color:var(--txt-2);
+  font-size:1rem;
+}
+.btn-icon:hover{border-color:var(--acc);color:var(--acc);}
+
+/* Inputs */
+.inp{
+  width:100%;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid var(--brd);
+  border-radius:var(--r-sm);
+  color:var(--txt);
+  font-family:"Syne",sans-serif;
+  font-size:1rem;
+  padding:.95rem 1.1rem;
+  outline:none;
+  transition:all .25s var(--ease);
+}
+.inp:focus{
+  border-color:var(--acc);
+  background:rgba(91,127,255,.05);
+  box-shadow:0 0 0 4px rgba(91,127,255,.12);
+}
 .inp::placeholder{color:var(--mute);}
-.topbar{display:flex;align-items:center;justify-content:space-between;
-  width:100%;max-width:820px;margin-bottom:1.6rem;flex-wrap:wrap;gap:.7rem;}
-.chip{display:inline-flex;align-items:center;gap:.5rem;
-  background:rgba(255,255,255,.05);border:1px solid var(--brd);
-  border-radius:50px;padding:.35rem .85rem .35rem .4rem;}
-.av{width:30px;height:30px;border-radius:50%;flex-shrink:0;
+
+/* ════════════════════════════════════════════════════════════
+   TOP NAV (when logged in)
+   ════════════════════════════════════════════════════════════ */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  max-width:880px;
+  margin-bottom:1.8rem;
+  flex-wrap:wrap;
+  gap:.7rem;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
+  background:linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid var(--brd);
+  border-radius:50px;
+  padding:.4rem 1rem .4rem .4rem;
+  transition:all .2s var(--ease);
+}
+.chip:hover{border-color:var(--brd-2);}
+.av{
+  width:32px;height:32px;
+  border-radius:50%;
+  flex-shrink:0;
   background:linear-gradient(135deg,var(--acc),var(--a2));
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.8rem;color:#fff;}
-.sec-ttl{font-size:1rem;font-weight:700;color:var(--mute);
-  width:100%;max-width:820px;margin-bottom:.85rem;display:flex;align-items:center;gap:.45rem;}
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:.86rem;
+  color:#fff;
+  box-shadow:0 2px 8px rgba(91,127,255,.4);
+}
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes popIn{0%{transform:scale(.82);opacity:0}65%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
-@keyframes shimmer{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
-.anim-up{animation:fadeUp .5s ease both;}
-.anim-in{animation:slideIn .28s ease both;}
+.streak{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  background:linear-gradient(135deg,rgba(251,146,60,.15),rgba(251,191,36,.1));
+  border:1px solid rgba(251,146,60,.3);
+  border-radius:50px;
+  padding:.35rem .8rem;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.72rem;
+  font-weight:600;
+  color:var(--orange);
+}
+.streak-emo{font-size:.95rem;line-height:1;}
 
-/* ════════ NAME SCREEN ════════ */
-#s-name{justify-content:center;gap:0;}
-.hero{text-align:center;margin-bottom:2.2rem;}
-.hero-sub{color:var(--mute);font-size:.88rem;margin-top:.5rem;line-height:1.5;}
-.name-box{width:100%;max-width:400px;}
-.name-box h2{font-size:1.25rem;margin-bottom:.3rem;}
-.name-box .hint{color:var(--mute);font-size:.82rem;margin-bottom:1.5rem;line-height:1.6;}
-.divider{display:flex;align-items:center;gap:.7rem;color:var(--mute);font-size:.75rem;margin:.8rem 0;}
-.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--brd);}
+.sec-ttl{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:.78rem;
+  font-weight:700;
+  color:var(--mute);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  width:100%;
+  max-width:880px;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.sec-ttl::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--brd) 0%,transparent 100%);
+}
 
-/* ════════ HOME SCREEN ════════ */
+/* ════════════════════════════════════════════════════════════
+   NAME SCREEN (Welcome)
+   ════════════════════════════════════════════════════════════ */
+#s-name{justify-content:center;gap:0;padding-top:3rem;}
+
+.hero{
+  text-align:center;
+  margin-bottom:2.4rem;
+  max-width:520px;
+}
+.hero-sub{
+  color:var(--txt-2);
+  font-size:1rem;
+  margin-top:.85rem;
+  line-height:1.55;
+  font-weight:500;
+}
+
+.name-box{width:100%;max-width:420px;}
+.name-box h2{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.4rem;
+  font-weight:700;
+  margin-bottom:.4rem;
+  letter-spacing:-.01em;
+}
+.name-box .hint{
+  color:var(--mute);
+  font-size:.85rem;
+  margin-bottom:1.5rem;
+  line-height:1.6;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:.85rem;
+  color:var(--mute);
+  font-family:"JetBrains Mono",monospace;
+  font-size:.7rem;
+  margin:1rem 0;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+}
+.divider::before,.divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--brd);
+}
+
+/* ════════════════════════════════════════════════════════════
+   HOME SCREEN
+   ════════════════════════════════════════════════════════════ */
 #s-home{padding-top:1.8rem;}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:.85rem;width:100%;max-width:700px;}
-.mcard{position:relative;border-radius:16px;padding:1.7rem 1.3rem;cursor:pointer;
-  overflow:hidden;transition:all .22s ease;animation:fadeUp .4s ease both;}
-.mcard::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .25s;}
-.mcard:hover::before{opacity:1;}
-.mcard:hover{transform:translateY(-4px);}
-.mcard:active{transform:translateY(-1px);}
-.mcard-icon{font-size:2.2rem;margin-bottom:.75rem;display:block;}
-.mcard-name{font-size:1rem;font-weight:700;margin-bottom:.22rem;}
-.mcard-desc{font-size:.74rem;color:var(--mute);line-height:1.45;}
 
-.mc-test{background:linear-gradient(135deg,rgba(91,127,255,.15),rgba(91,127,255,.05));
-  border:1.5px solid rgba(91,127,255,.3);}
-.mc-test::before{background:linear-gradient(135deg,rgba(91,127,255,.22),rgba(91,127,255,.08));}
-.mc-test:hover{border-color:var(--acc);}
+/* Menu grid */
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:1rem;
+  width:100%;
+  max-width:880px;
+}
 
-.mc-study{background:linear-gradient(135deg,rgba(29,185,84,.12),rgba(29,185,84,.04));
-  border:1.5px solid rgba(29,185,84,.25);}
-.mc-study::before{background:linear-gradient(135deg,rgba(29,185,84,.18),rgba(29,185,84,.07));}
-.mc-study:hover{border-color:var(--grn);}
+.mcard{
+  position:relative;
+  border-radius:var(--r-lg);
+  padding:1.7rem 1.4rem;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .35s cubic-bezier(.34,1.4,.64,1),border-color .35s var(--ease),box-shadow .35s var(--ease);
+  animation:cardIn .7s cubic-bezier(.16,.84,.32,1) both;
+  border:1px solid var(--brd);
+  background:var(--card);
+  will-change:transform;
+}
+.mcard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--mcc1,rgba(91,127,255,.18)),var(--mcc2,rgba(91,127,255,.04)));
+  opacity:.85;
+  z-index:0;
+}
+.mcard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 0%,var(--mcc1,rgba(91,127,255,.3)),transparent 60%);
+  opacity:0;
+  transition:opacity .35s var(--ease);
+  z-index:0;
+}
+.mcard > *{position:relative;z-index:1;}
+.mcard:hover{transform:translateY(-5px);border-color:var(--mcb,var(--acc));}
+.mcard:hover::after{opacity:1;}
+.mcard:active{transform:translateY(-2px);}
 
-.mc-lb{background:linear-gradient(135deg,rgba(240,180,41,.12),rgba(240,180,41,.04));
-  border:1.5px solid rgba(240,180,41,.25);}
-.mc-lb::before{background:linear-gradient(135deg,rgba(240,180,41,.18),rgba(240,180,41,.06));}
-.mc-lb:hover{border-color:var(--gold);}
+.mcard-icon{
+  font-size:2.4rem;
+  margin-bottom:.85rem;
+  display:block;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));
+}
+.mcard-name{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.1rem;
+  font-weight:700;
+  margin-bottom:.3rem;
+  letter-spacing:-.01em;
+}
+.mcard-desc{
+  font-size:.78rem;
+  color:var(--txt-2);
+  line-height:1.5;
+  opacity:.85;
+}
+.mcard-arrow{
+  position:absolute;
+  top:1.2rem;
+  right:1.2rem;
+  width:30px;height:30px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.8rem;
+  color:var(--txt-2);
+  transition:all .25s var(--ease);
+  z-index:1;
+}
+.mcard:hover .mcard-arrow{
+  background:var(--mcb,var(--acc));
+  color:#fff;
+  transform:translate(2px,-2px);
+}
 
-.mc-admin{background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(244,114,182,.04));
-  border:1.5px solid rgba(244,114,182,.25);}
-.mc-admin::before{background:linear-gradient(135deg,rgba(244,114,182,.18),rgba(244,114,182,.06));}
-.mc-admin:hover{border-color:var(--pink);}
+.mc-test{--mcc1:rgba(91,127,255,.22);--mcc2:rgba(91,127,255,.05);--mcb:var(--acc);border-color:rgba(91,127,255,.3);}
+.mc-study{--mcc1:rgba(16,185,129,.18);--mcc2:rgba(16,185,129,.04);--mcb:var(--grn);border-color:rgba(16,185,129,.28);}
+.mc-lb{--mcc1:rgba(251,191,36,.18);--mcc2:rgba(251,191,36,.04);--mcb:var(--gold);border-color:rgba(251,191,36,.28);}
+.mc-admin{--mcc1:rgba(244,114,182,.18);--mcc2:rgba(244,114,182,.04);--mcb:var(--pink);border-color:rgba(244,114,182,.28);}
 
-/* ════════ SUBJECT GRID ════════ */
-.subj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:.85rem;width:100%;max-width:820px;}
-.scard{position:relative;border-radius:15px;padding:1.4rem 1.25rem;cursor:pointer;
-  overflow:hidden;transition:all .22s ease;animation:fadeUp .38s ease both;}
-.scard::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .25s;}
-.scard:hover::before{opacity:1;}
+@keyframes cardIn{
+  0%{opacity:0;transform:translateY(28px) scale(.96);}
+  60%{opacity:1;}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+
+/* ════════════════════════════════════════════════════════════
+   SUBJECT GRID
+   ════════════════════════════════════════════════════════════ */
+.subj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1rem;
+  width:100%;
+  max-width:880px;
+}
+
+.scard{
+  position:relative;
+  border-radius:var(--r-md);
+  padding:1.5rem 1.35rem;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .32s cubic-bezier(.34,1.4,.64,1),border-color .32s var(--ease);
+  animation:cardIn .65s cubic-bezier(.16,.84,.32,1) both;
+  background:var(--card);
+}
+.scard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--scc,rgba(91,127,255,.15)) 0%,rgba(20,24,40,0) 70%);
+  z-index:0;
+}
+.scard > *{position:relative;z-index:1;}
 .scard:hover{transform:translateY(-4px);}
-.scard-ic{font-size:1.9rem;margin-bottom:.65rem;display:block;}
-.scard-n{font-size:.95rem;font-weight:700;margin-bottom:.2rem;}
-.scard-i{font-size:.72rem;color:var(--mute);font-family:"DM Mono",monospace;}
-.scard-best{position:absolute;top:.7rem;right:.7rem;
-  font-family:"DM Mono",monospace;font-size:.63rem;font-weight:600;
-  padding:.16rem .5rem;border-radius:50px;
-  background:rgba(29,185,84,.15);color:var(--grn);border:1px solid rgba(29,185,84,.3);}
 
-/* ════════ TEST SCREEN ════════ */
-.t-hdr{width:100%;max-width:760px;display:flex;align-items:center;
-  justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.6rem;}
-.t-lbl{font-family:"DM Mono",monospace;font-size:.73rem;color:var(--acc);
-  background:rgba(91,127,255,.1);border:1px solid rgba(91,127,255,.25);
-  border-radius:50px;padding:.25rem .8rem;}
-.prog-row{display:flex;justify-content:space-between;
-  font-family:"DM Mono",monospace;font-size:.72rem;color:var(--mute);
-  width:100%;max-width:760px;margin-bottom:.4rem;}
-.prog-track{background:var(--brd);border-radius:50px;height:4px;
-  width:100%;max-width:760px;overflow:hidden;margin-bottom:1.6rem;}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--gold));
-  border-radius:50px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%;}
-.qwrap{width:100%;max-width:760px;}
-.qcard{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);
-  padding:1.6rem;margin-bottom:.9rem;box-shadow:var(--sh);}
-.qtop{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:1rem;}
-.qnum{background:linear-gradient(135deg,var(--acc),#3d5fe0);color:#fff;
-  font-family:"DM Mono",monospace;font-size:.7rem;padding:.2rem .55rem;
-  border-radius:6px;white-space:nowrap;flex-shrink:0;margin-top:.14rem;}
-.qtxt{font-size:.96rem;font-weight:600;line-height:1.55;}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;}
-@media(max-width:480px){.opts{grid-template-columns:1fr;}}
-.ob{background:rgba(255,255,255,.03);border:1.5px solid var(--brd);border-radius:10px;
-  color:var(--txt);cursor:pointer;font-family:"DM Mono",monospace;font-size:.82rem;
-  padding:.65rem .9rem;text-align:left;transition:all .16s ease;
-  display:flex;align-items:center;gap:.5rem;word-break:break-word;line-height:1.35;}
-.ob:hover:not(:disabled){border-color:var(--acc);background:rgba(91,127,255,.07);transform:translateY(-1px);}
+.scard-ic{
+  font-size:2rem;
+  margin-bottom:.7rem;
+  display:block;
+  filter:drop-shadow(0 3px 10px rgba(0,0,0,.4));
+}
+.scard-n{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  margin-bottom:.25rem;
+  letter-spacing:-.005em;
+}
+.scard-i{
+  font-size:.72rem;
+  color:var(--mute);
+  font-family:"JetBrains Mono",monospace;
+}
+.scard-best{
+  position:absolute;
+  top:.85rem;
+  right:.85rem;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.65rem;
+  font-weight:600;
+  padding:.2rem .55rem;
+  border-radius:50px;
+  background:rgba(16,185,129,.15);
+  color:var(--grn);
+  border:1px solid rgba(16,185,129,.3);
+  z-index:2;
+}
+
+/* ════════════════════════════════════════════════════════════
+   TEST SCREEN
+   ════════════════════════════════════════════════════════════ */
+.t-hdr{
+  width:100%;
+  max-width:800px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:1.2rem;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+.t-lbl{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.76rem;
+  font-weight:500;
+  color:#c4d0ff;
+  background:linear-gradient(135deg,rgba(91,127,255,.15),rgba(167,139,250,.08));
+  border:1px solid rgba(91,127,255,.3);
+  border-radius:50px;
+  padding:.32rem .9rem;
+}
+
+.prog-row{
+  display:flex;
+  justify-content:space-between;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.74rem;
+  color:var(--txt-2);
+  width:100%;
+  max-width:800px;
+  margin-bottom:.5rem;
+  font-weight:500;
+}
+.prog-track{
+  background:var(--brd);
+  border-radius:50px;
+  height:5px;
+  width:100%;
+  max-width:800px;
+  overflow:hidden;
+  margin-bottom:1.8rem;
+  position:relative;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--acc) 0%,var(--a2) 50%,var(--gold) 100%);
+  border-radius:50px;
+  transition:width .5s var(--ease-out);
+  width:0%;
+  position:relative;
+  overflow:hidden;
+}
+.prog-fill::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  animation:shimmer 2s infinite;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-100%);}
+  100%{transform:translateX(200%);}
+}
+
+.qwrap{width:100%;max-width:800px;}
+
+.qcard{
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:var(--r-md);
+  padding:1.7rem 1.5rem;
+  margin-bottom:1rem;
+  box-shadow:var(--sh-sm);
+  animation:qIn .55s cubic-bezier(.16,.84,.32,1) both;
+  position:relative;
+  overflow:hidden;
+}
+.qcard::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:3px;
+  height:100%;
+  background:linear-gradient(180deg,var(--acc),var(--a2));
+  opacity:.7;
+}
+@keyframes qIn{
+  0%{opacity:0;transform:translateY(16px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+
+.qtop{
+  display:flex;
+  align-items:flex-start;
+  gap:.85rem;
+  margin-bottom:1.1rem;
+}
+.qnum{
+  background:linear-gradient(135deg,var(--acc),var(--acc-d));
+  color:#fff;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.7rem;
+  font-weight:700;
+  padding:.28rem .6rem;
+  border-radius:7px;
+  white-space:nowrap;
+  flex-shrink:0;
+  margin-top:.15rem;
+  box-shadow:0 2px 8px rgba(91,127,255,.3);
+}
+.qtxt{
+  font-size:1rem;
+  font-weight:600;
+  line-height:1.55;
+  color:var(--txt);
+}
+
+.opts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.65rem;
+}
+@media(max-width:520px){.opts{grid-template-columns:1fr;}}
+
+.ob{
+  background:rgba(255,255,255,.02);
+  border:1.5px solid var(--brd);
+  border-radius:var(--r-sm);
+  color:var(--txt);
+  cursor:pointer;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.85rem;
+  padding:.78rem 1rem;
+  text-align:left;
+  transition:all .18s var(--ease);
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  word-break:break-word;
+  line-height:1.4;
+}
+.ob:hover:not(:disabled){
+  border-color:var(--acc);
+  background:rgba(91,127,255,.07);
+  transform:translateY(-1px);
+}
 .ob:active:not(:disabled){transform:translateY(0);}
-.ob .lt{display:inline-flex;align-items:center;justify-content:center;
-  min-width:20px;height:20px;border-radius:5px;background:var(--brd);
-  font-size:.68rem;font-weight:700;flex-shrink:0;transition:all .16s;}
-.ob.ok{border-color:var(--grn)!important;background:rgba(29,185,84,.1)!important;color:var(--grn)!important;}
+.ob .lt{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:24px;
+  height:24px;
+  border-radius:7px;
+  background:var(--brd);
+  font-size:.72rem;
+  font-weight:700;
+  flex-shrink:0;
+  transition:all .18s;
+}
+.ob.ok{
+  border-color:var(--grn)!important;
+  background:rgba(16,185,129,.12)!important;
+  color:var(--grn)!important;
+  animation:correctPulse .5s var(--ease-spring);
+}
 .ob.ok .lt{background:var(--grn);color:#07080e;}
-.ob.no{border-color:var(--red)!important;background:rgba(231,76,60,.1)!important;color:var(--red)!important;}
+.ob.no{
+  border-color:var(--red)!important;
+  background:rgba(239,68,68,.12)!important;
+  color:var(--red)!important;
+  animation:wrongShake .4s var(--ease);
+}
 .ob.no .lt{background:var(--red);color:#fff;}
 .ob:disabled{cursor:default;}
 
-/* ════════ SCORE SCREEN ════════ */
+@keyframes correctPulse{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.025);}
+  100%{transform:scale(1);}
+}
+@keyframes wrongShake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-4px);}
+  40%{transform:translateX(4px);}
+  60%{transform:translateX(-3px);}
+  80%{transform:translateX(2px);}
+}
+
+/* ════════════════════════════════════════════════════════════
+   SCORE SCREEN
+   ════════════════════════════════════════════════════════════ */
 #s-score{justify-content:center;}
-.sbox{width:100%;max-width:440px;text-align:center;animation:popIn .45s ease;}
-.ring{width:128px;height:128px;border-radius:50%;position:relative;
-  background:conic-gradient(var(--acc) var(--deg,0deg),var(--brd) 0);
-  margin:0 auto 1.4rem;}
-.ring::after{content:"";position:absolute;width:92px;height:92px;
-  border-radius:50%;background:var(--card);inset:18px;}
-.rpct{position:relative;z-index:1;font-size:1.7rem;font-weight:800;color:var(--acc);
-  display:flex;align-items:center;justify-content:center;height:100%;}
-.emo{font-size:3.2rem;margin-bottom:.65rem;animation:popIn .4s ease;}
-.sbox h2{font-size:1.6rem;font-weight:800;margin-bottom:.35rem;}
-.sbox .sdesc{color:var(--mute);margin-bottom:1.6rem;line-height:1.55;font-size:.86rem;}
-.srow{display:flex;justify-content:center;gap:2rem;margin-bottom:1.6rem;}
-.sst .sv{font-size:1.8rem;font-weight:800;}
-.sst .sl{font-size:.66rem;color:var(--mute);font-family:"DM Mono",monospace;
-  text-transform:uppercase;letter-spacing:.07em;}
-.brow{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;}
 
-/* ════════ STUDY SCREEN ════════ */
+.sbox{
+  width:100%;
+  max-width:460px;
+  text-align:center;
+  padding:2.4rem 1.9rem!important;
+  animation:popIn .75s cubic-bezier(.34,1.4,.64,1);
+}
+@keyframes popIn{
+  0%{transform:scale(.82) translateY(20px);opacity:0;}
+  50%{opacity:1;}
+  70%{transform:scale(1.015) translateY(0);}
+  100%{transform:scale(1) translateY(0);opacity:1;}
+}
+
+.ring{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  position:relative;
+  margin:0 auto 1.6rem;
+}
+.ring svg{transform:rotate(-90deg);}
+.ring svg circle{fill:none;stroke-width:10;}
+.ring .r-bg{stroke:var(--brd);}
+.ring .r-fg{
+  stroke:url(#rg);
+  stroke-linecap:round;
+  stroke-dasharray:440;
+  stroke-dashoffset:440;
+  transition:stroke-dashoffset 1.6s cubic-bezier(.34,1.1,.64,1);
+}
+.rpct{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:"Bricolage Grotesque",sans-serif;
+}
+.rpct-v{
+  font-size:2.4rem;
+  font-weight:800;
+  letter-spacing:-.03em;
+  line-height:1;
+  background:linear-gradient(135deg,var(--acc),var(--a2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.rpct-l{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.65rem;
+  color:var(--mute);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  margin-top:.25rem;
+}
+
+.emo{
+  font-size:3.4rem;
+  margin-bottom:.7rem;
+  animation:emoIn .85s cubic-bezier(.34,1.5,.64,1);
+}
+@keyframes emoIn{
+  0%{transform:scale(0) rotate(-30deg);opacity:0;}
+  40%{opacity:1;}
+  60%{transform:scale(1.18) rotate(10deg);}
+  80%{transform:scale(.96) rotate(-3deg);}
+  100%{transform:scale(1) rotate(0);opacity:1;}
+}
+
+.sbox h2{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.8rem;
+  font-weight:800;
+  margin-bottom:.45rem;
+  letter-spacing:-.02em;
+}
+.sbox .sdesc{
+  color:var(--txt-2);
+  margin-bottom:1.7rem;
+  line-height:1.55;
+  font-size:.92rem;
+}
+
+.srow{
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-bottom:1.8rem;
+}
+.sst{
+  flex:1;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--brd);
+  border-radius:var(--r-sm);
+  padding:.8rem .4rem;
+}
+.sst .sv{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.85rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1;
+}
+.sst .sl{
+  font-size:.65rem;
+  color:var(--mute);
+  font-family:"JetBrains Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-top:.3rem;
+}
+
+.brow{
+  display:flex;
+  gap:.55rem;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* ════════════════════════════════════════════════════════════
+   REVIEW SCREEN
+   ════════════════════════════════════════════════════════════ */
+#s-review{align-items:stretch;}
+.rv-wrap{width:100%;max-width:820px;margin:0 auto;}
+.rv-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:1.4rem;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+.rv-h1{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.6rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+}
+.rv-sub{
+  color:var(--mute);
+  font-size:.84rem;
+  margin-top:.2rem;
+}
+.rv-card{
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:var(--r-md);
+  padding:1.3rem 1.4rem;
+  margin-bottom:.8rem;
+  border-left:3px solid var(--red);
+}
+.rv-q{
+  font-size:.95rem;
+  font-weight:600;
+  line-height:1.5;
+  margin-bottom:1rem;
+}
+.rv-row{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  margin-bottom:.5rem;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.82rem;
+}
+.rv-row:last-child{margin-bottom:0;}
+.rv-lbl{
+  color:var(--mute);
+  font-size:.65rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  min-width:60px;
+}
+.rv-bad{color:var(--red);text-decoration:line-through;opacity:.85;}
+.rv-good{color:var(--grn);font-weight:600;}
+
+/* ════════════════════════════════════════════════════════════
+   STUDY VIEW
+   ════════════════════════════════════════════════════════════ */
 #s-study-view{align-items:stretch;}
-.sv-wrap{width:100%;max-width:820px;margin:0 auto;}
-.sv-hdr{display:flex;align-items:flex-start;justify-content:space-between;
-  margin-bottom:1.2rem;flex-wrap:wrap;gap:.6rem;padding-top:.4rem;}
-.sv-ttl{font-size:1.4rem;font-weight:800;}
-.sv-sts{color:var(--mute);font-size:.78rem;margin-top:.2rem;}
-.sv-search{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--brd);
-  border-radius:10px;color:var(--txt);font-family:"Syne",sans-serif;
-  font-size:.88rem;padding:.72rem 1rem;outline:none;transition:all .2s;margin-bottom:.75rem;}
-.sv-search:focus{border-color:var(--acc);}
+.sv-wrap{width:100%;max-width:880px;margin:0 auto;}
+.sv-hdr{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:1.3rem;
+  flex-wrap:wrap;
+  gap:.7rem;
+  padding-top:.3rem;
+}
+.sv-ttl{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.55rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+}
+.sv-sts{
+  color:var(--mute);
+  font-size:.82rem;
+  margin-top:.25rem;
+}
+.sv-search{
+  width:100%;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid var(--brd);
+  border-radius:var(--r-sm);
+  color:var(--txt);
+  font-family:"Syne",sans-serif;
+  font-size:.92rem;
+  padding:.8rem 1rem;
+  outline:none;
+  transition:all .22s var(--ease);
+  margin-bottom:.8rem;
+}
+.sv-search:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(91,127,255,.1);}
 .sv-search::placeholder{color:var(--mute);}
-.sv-cnt{font-family:"DM Mono",monospace;font-size:.7rem;color:var(--mute);margin-bottom:.65rem;}
-.qv-card{background:var(--card);border:1px solid var(--brd);border-radius:13px;
-  padding:1.15rem 1.25rem;margin-bottom:.65rem;box-shadow:var(--sh);}
-.qv-num{font-family:"DM Mono",monospace;font-size:.65rem;color:var(--acc);
-  background:rgba(91,127,255,.1);border:1px solid rgba(91,127,255,.2);
-  border-radius:50px;padding:.15rem .5rem;display:inline-block;margin-bottom:.5rem;}
-.qv-q{font-size:.9rem;font-weight:600;line-height:1.5;margin-bottom:.7rem;}
-.qv-opts{display:flex;flex-wrap:wrap;gap:.38rem;}
-.qv-opt{font-size:.78rem;font-family:"DM Mono",monospace;
-  background:rgba(255,255,255,.03);border:1px solid var(--brd);
-  border-radius:7px;padding:.3rem .65rem;color:var(--mute);transition:all .15s;line-height:1.35;}
-.qv-opt.cor{border-color:rgba(29,185,84,.5);color:var(--grn);
-  background:rgba(29,185,84,.1);font-weight:600;}
-.qv-opt.cor::before{content:"✓ ";font-size:.7rem;}
+.sv-cnt{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.72rem;
+  color:var(--mute);
+  margin-bottom:.8rem;
+}
 
-/* ════════ LEADERBOARD ════════ */
+.qv-card{
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:var(--r-md);
+  padding:1.25rem 1.35rem;
+  margin-bottom:.7rem;
+  position:relative;
+  transition:border-color .2s var(--ease);
+}
+.qv-card:hover{border-color:var(--brd-2);}
+.qv-num{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.65rem;
+  font-weight:600;
+  color:#c4d0ff;
+  background:rgba(91,127,255,.12);
+  border:1px solid rgba(91,127,255,.25);
+  border-radius:50px;
+  padding:.18rem .55rem;
+  display:inline-block;
+  margin-bottom:.6rem;
+}
+.qv-q{
+  font-size:.92rem;
+  font-weight:600;
+  line-height:1.5;
+  margin-bottom:.85rem;
+}
+.qv-opts{display:flex;flex-wrap:wrap;gap:.42rem;}
+.qv-opt{
+  font-size:.78rem;
+  font-family:"JetBrains Mono",monospace;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--brd);
+  border-radius:8px;
+  padding:.34rem .7rem;
+  color:var(--mute);
+  line-height:1.4;
+}
+.qv-opt.cor{
+  border-color:rgba(16,185,129,.5);
+  color:var(--grn);
+  background:rgba(16,185,129,.1);
+  font-weight:600;
+}
+.qv-opt.cor::before{content:"✓ ";font-size:.72rem;}
+
+/* ════════════════════════════════════════════════════════════
+   LEADERBOARD
+   ════════════════════════════════════════════════════════════ */
 #s-lb{align-items:flex-start;}
-.lb-wrap{width:100%;max-width:750px;}
-.lb-top{display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:.5rem;flex-wrap:wrap;gap:.6rem;}
-.lb-h1{font-size:1.75rem;font-weight:800;}
-.lb-sts{color:var(--mute);font-size:.76rem;margin-top:.2rem;display:flex;align-items:center;gap:.4rem;}
-.odot{width:6px;height:6px;border-radius:50%;background:var(--grn);
-  animation:shimmer 2s infinite;flex-shrink:0;}
-.frow{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0 .8rem;}
-.fb{background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:50px;
-  color:var(--mute);cursor:pointer;font-family:"DM Mono",monospace;font-size:.65rem;
-  padding:.22rem .7rem;transition:all .17s;}
-.fb.on,.fb:hover{border-color:var(--acc);color:var(--acc);background:rgba(91,127,255,.09);}
-.lb-tbl{background:var(--card);border:1px solid var(--brd);border-radius:16px;overflow:hidden;box-shadow:var(--sh);}
-.lbr{display:grid;grid-template-columns:42px 1fr 76px 68px;
-  align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--brd);
-  cursor:pointer;transition:background .14s;}
+.lb-wrap{width:100%;max-width:820px;}
+
+.lb-top{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  margin-bottom:.6rem;
+  flex-wrap:wrap;
+  gap:.7rem;
+}
+.lb-h1{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.95rem;
+  font-weight:800;
+  letter-spacing:-.025em;
+  background:linear-gradient(135deg,#fff,var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.lb-sts{
+  color:var(--mute);
+  font-size:.78rem;
+  margin-top:.25rem;
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+}
+.odot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--grn);
+  box-shadow:0 0 8px rgba(16,185,129,.6);
+  animation:pulseGlow 2s infinite;
+  flex-shrink:0;
+}
+@keyframes pulseGlow{
+  0%,100%{opacity:.6;}
+  50%{opacity:1;}
+}
+
+/* PODIUM */
+.podium{
+  display:grid;
+  grid-template-columns:1fr 1.15fr 1fr;
+  gap:.7rem;
+  margin:1.4rem 0 1.6rem;
+  align-items:end;
+}
+.pod{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:var(--r-md);
+  padding:1.1rem .8rem .9rem;
+  text-align:center;
+  overflow:hidden;
+  animation:podIn .85s cubic-bezier(.16,.84,.32,1) both;
+}
+.pod.p1{
+  background:linear-gradient(180deg,rgba(251,191,36,.18),rgba(251,191,36,.04));
+  border-color:rgba(251,191,36,.4);
+  transform:translateY(-8px);
+  animation-delay:.3s;
+}
+.pod.p2{
+  background:linear-gradient(180deg,rgba(170,184,194,.15),rgba(170,184,194,.04));
+  border-color:rgba(170,184,194,.35);
+  animation-delay:.15s;
+}
+.pod.p3{
+  background:linear-gradient(180deg,rgba(205,127,50,.15),rgba(205,127,50,.04));
+  border-color:rgba(205,127,50,.35);
+  animation-delay:.45s;
+}
+@keyframes podIn{
+  0%{opacity:0;transform:translateY(40px) scale(.9);}
+  60%{opacity:1;}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+.pod.p1{animation-name:podInP1;}
+@keyframes podInP1{
+  0%{opacity:0;transform:translateY(40px) scale(.9);}
+  60%{opacity:1;}
+  100%{opacity:1;transform:translateY(-8px) scale(1);}
+}
+
+.pod-medal{
+  font-size:2rem;
+  line-height:1;
+  margin-bottom:.4rem;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));
+}
+.pod-av{
+  width:48px;height:48px;
+  border-radius:50%;
+  margin:0 auto .55rem;
+  background:linear-gradient(135deg,var(--acc),var(--a2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:1.2rem;
+  color:#fff;
+  box-shadow:0 4px 16px rgba(91,127,255,.4);
+}
+.pod.p1 .pod-av{background:linear-gradient(135deg,var(--gold),#d97706);box-shadow:0 4px 16px rgba(251,191,36,.45);}
+.pod.p2 .pod-av{background:linear-gradient(135deg,#cbd5e0,#94a3b8);}
+.pod.p3 .pod-av{background:linear-gradient(135deg,#cd7f32,#92400e);}
+.pod-name{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:.85rem;
+  font-weight:700;
+  margin-bottom:.2rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.pod-pct{
+  font-family:"JetBrains Mono",monospace;
+  font-size:1.1rem;
+  font-weight:700;
+}
+.pod.p1 .pod-pct{color:var(--gold);}
+.pod.p2 .pod-pct{color:#cbd5e0;}
+.pod.p3 .pod-pct{color:#cd7f32;}
+.pod-tag{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.6rem;
+  color:var(--mute);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-top:.15rem;
+}
+
+.frow{
+  display:flex;
+  gap:.45rem;
+  flex-wrap:wrap;
+  margin:1rem 0 .9rem;
+}
+.fb{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--brd);
+  border-radius:50px;
+  color:var(--mute);
+  cursor:pointer;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.68rem;
+  font-weight:500;
+  padding:.28rem .8rem;
+  transition:all .18s var(--ease);
+}
+.fb.on,.fb:hover{
+  border-color:var(--acc);
+  color:#c4d0ff;
+  background:rgba(91,127,255,.1);
+}
+
+.lb-tbl{
+  background:var(--card);
+  border:1px solid var(--brd);
+  border-radius:var(--r-md);
+  overflow:hidden;
+  box-shadow:var(--sh-sm);
+}
+.lbr{
+  display:grid;
+  grid-template-columns:48px 1fr 86px 76px;
+  align-items:center;
+  padding:.85rem 1.1rem;
+  border-bottom:1px solid var(--brd);
+  cursor:pointer;
+  transition:background .15s var(--ease);
+  gap:.5rem;
+}
 .lbr:last-child{border-bottom:none;}
-.lbr.hdr{cursor:default;background:rgba(255,255,255,.03);
-  color:var(--mute);font-family:"DM Mono",monospace;font-size:.63rem;
-  text-transform:uppercase;letter-spacing:.05em;}
-.lbr:not(.hdr):hover{background:rgba(91,127,255,.04);}
-.lbr.me{border:2px solid rgba(91,127,255,.35)!important;background:rgba(91,127,255,.05)!important;}
-.rk{font-size:1.05rem;font-weight:800;}
-.g{color:var(--gold);}
-.si{color:#aab8c2;}
-.br{color:#cd7f32;}
-.lbname{font-weight:700;font-size:.86rem;}
-.ldots{display:flex;gap:3px;margin-top:.25rem;}
-.ldot{width:7px;height:7px;border-radius:50%;}
-.pval{font-family:"DM Mono",monospace;font-size:.84rem;font-weight:700;text-align:center;}
-.pbar{height:3px;border-radius:50px;background:linear-gradient(90deg,var(--acc),var(--gold));margin:.2rem auto 0;}
-.ldet{background:rgba(255,255,255,.02);border-top:1px solid var(--brd);
-  padding:.65rem 1rem;display:none;}
+.lbr.hdr{
+  cursor:default;
+  background:rgba(255,255,255,.02);
+  color:var(--mute);
+  font-family:"JetBrains Mono",monospace;
+  font-size:.62rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  padding:.7rem 1.1rem;
+}
+.lbr:not(.hdr):hover{background:rgba(91,127,255,.05);}
+.lbr.me{
+  background:linear-gradient(90deg,rgba(91,127,255,.1),rgba(91,127,255,.02))!important;
+  border-left:3px solid var(--acc);
+  padding-left:calc(1.1rem - 3px);
+}
+.rk{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.05rem;
+  font-weight:800;
+  color:var(--txt-2);
+}
+.lbname{
+  font-weight:700;
+  font-size:.9rem;
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+}
+.lbme{
+  font-size:.55rem;
+  background:var(--acc);
+  color:#fff;
+  padding:.1rem .35rem;
+  border-radius:4px;
+  font-family:"JetBrains Mono",monospace;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.ldots{
+  display:flex;
+  gap:3px;
+  margin-top:.3rem;
+}
+.ldot{
+  width:8px;height:8px;
+  border-radius:2px;
+}
+.pval{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.88rem;
+  font-weight:700;
+  text-align:center;
+}
+.pbar{
+  height:3px;
+  border-radius:50px;
+  background:linear-gradient(90deg,var(--acc),var(--gold));
+  margin:.2rem auto 0;
+  max-width:60px;
+}
+.ldet{
+  background:rgba(255,255,255,.02);
+  border-top:1px solid var(--brd);
+  padding:.75rem 1.1rem;
+  display:none;
+  animation:slideDown .25s var(--ease-out);
+}
 .ldet.open{display:block;}
-.ldr{display:flex;justify-content:space-between;align-items:center;
-  padding:.28rem 0;border-bottom:1px solid var(--brd);font-size:.8rem;}
+@keyframes slideDown{
+  from{opacity:0;transform:translateY(-5px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.ldr{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:.32rem 0;
+  border-bottom:1px solid var(--brd);
+  font-size:.82rem;
+}
 .ldr:last-child{border-bottom:none;}
-.lb-empty{padding:2.5rem;text-align:center;color:var(--mute);line-height:1.9;font-size:.9rem;}
+.lb-empty{
+  padding:3rem 1.5rem;
+  text-align:center;
+  color:var(--mute);
+  line-height:1.8;
+  font-size:.92rem;
+}
+.lb-empty-ic{
+  font-size:2.5rem;
+  margin-bottom:.6rem;
+  opacity:.6;
+}
 
-/* ════════ ADMIN SCREEN ════════ */
+/* ════════════════════════════════════════════════════════════
+   ADMIN
+   ════════════════════════════════════════════════════════════ */
 #s-admin{justify-content:center;}
-.admin-box{width:100%;max-width:420px;text-align:center;}
-.admin-avatar{width:90px;height:90px;border-radius:50%;
+.admin-box{width:100%;max-width:440px;text-align:center;}
+.admin-avatar{
+  width:100px;height:100px;
+  border-radius:50%;
   background:linear-gradient(135deg,var(--pink),var(--a2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:2.4rem;margin:0 auto 1.2rem;
-  box-shadow:0 8px 32px rgba(244,114,182,.3);}
-.admin-name{font-size:1.5rem;font-weight:800;margin-bottom:.3rem;}
-.admin-role{font-family:"DM Mono",monospace;font-size:.72rem;color:var(--mute);margin-bottom:1.5rem;}
-.tg-btn{display:flex;align-items:center;justify-content:center;gap:.7rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.6rem;
+  margin:0 auto 1.3rem;
+  box-shadow:0 12px 40px rgba(244,114,182,.35);
+  animation:floatY 4s ease-in-out infinite;
+}
+@keyframes floatY{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+}
+.admin-name{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.7rem;
+  font-weight:800;
+  margin-bottom:.3rem;
+  letter-spacing:-.02em;
+}
+.admin-role{
+  font-family:"JetBrains Mono",monospace;
+  font-size:.74rem;
+  color:var(--mute);
+  margin-bottom:1.6rem;
+}
+.tg-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
   background:linear-gradient(135deg,#29a0e8,#1e8bc3);
-  color:#fff;font-size:1rem;font-weight:700;padding:1rem 2rem;
-  border-radius:14px;width:100%;cursor:pointer;
-  border:none;font-family:"Syne",sans-serif;
-  box-shadow:0 6px 24px rgba(41,160,232,.35);
-  transition:all .2s ease;text-decoration:none;}
-.tg-btn:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 28px rgba(41,160,232,.45);}
+  color:#fff;
+  font-size:1rem;
+  font-weight:700;
+  padding:1.05rem 2rem;
+  border-radius:var(--r-md);
+  width:100%;
+  cursor:pointer;
+  border:none;
+  font-family:"Syne",sans-serif;
+  box-shadow:0 8px 28px rgba(41,160,232,.35);
+  transition:all .25s var(--ease);
+  text-decoration:none;
+}
+.tg-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(41,160,232,.45);}
 .tg-icon{font-size:1.4rem;}
-.admin-stats{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1.5rem 0;}
-.astat{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:1rem;}
-.astat .av2{font-size:1.6rem;font-weight:800;margin-bottom:.2rem;}
-.astat .al{font-size:.7rem;color:var(--mute);font-family:"DM Mono",monospace;}
 
-/* ════════ TOAST ════════ */
-.toast{position:fixed;bottom:1.5rem;left:50%;
-  transform:translateX(-50%) translateY(120px);
-  background:var(--card);border:1px solid var(--brd);border-radius:12px;
-  padding:.65rem 1.3rem;font-size:.83rem;z-index:9999;
-  transition:transform .28s ease;box-shadow:var(--sh);
-  max-width:88vw;text-align:center;}
+/* ════════════════════════════════════════════════════════════
+   TOAST
+   ════════════════════════════════════════════════════════════ */
+.toast{
+  position:fixed;
+  bottom:1.8rem;
+  left:50%;
+  transform:translateX(-50%) translateY(140px);
+  background:linear-gradient(180deg,var(--card-2),var(--card));
+  border:1px solid var(--brd-2);
+  border-radius:var(--r-sm);
+  padding:.78rem 1.4rem;
+  font-size:.86rem;
+  font-weight:500;
+  z-index:9999;
+  transition:transform .3s var(--ease-spring);
+  box-shadow:var(--sh-lg);
+  max-width:88vw;
+  text-align:center;
+}
 .toast.show{transform:translateX(-50%) translateY(0);}
 
-/* ════════ CONFETTI ════════ */
-.cf{position:fixed;pointer-events:none;z-index:9999;animation:cfFall 2.5s ease-in forwards;}
-@keyframes cfFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(108vh) rotate(720deg);opacity:0;}}
+/* ════════════════════════════════════════════════════════════
+   MODAL
+   ════════════════════════════════════════════════════════════ */
+.modal-bd{
+  position:fixed;
+  inset:0;
+  background:rgba(6,8,15,.7);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  z-index:9998;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  animation:fadeIn .25s var(--ease);
+}
+.modal-bd.on{display:flex;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+.modal{
+  background:linear-gradient(180deg,var(--card-2),var(--card));
+  border:1px solid var(--brd-2);
+  border-radius:var(--r-lg);
+  padding:1.8rem 1.6rem 1.4rem;
+  max-width:380px;
+  width:100%;
+  text-align:center;
+  box-shadow:var(--sh-lg);
+  animation:modalIn .5s cubic-bezier(.34,1.4,.64,1);
+}
+@keyframes modalIn{
+  0%{transform:scale(.78) translateY(16px);opacity:0;}
+  60%{opacity:1;}
+  100%{transform:scale(1) translateY(0);opacity:1;}
+}
+.modal-ic{font-size:2.4rem;margin-bottom:.7rem;}
+.modal-ttl{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-size:1.25rem;
+  font-weight:700;
+  margin-bottom:.4rem;
+  letter-spacing:-.01em;
+}
+.modal-msg{
+  color:var(--txt-2);
+  font-size:.9rem;
+  line-height:1.5;
+  margin-bottom:1.3rem;
+}
+.modal-btns{
+  display:flex;
+  gap:.6rem;
+  justify-content:center;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONFETTI
+   ════════════════════════════════════════════════════════════ */
+.cf{
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  animation:cfFall 2.8s ease-in forwards;
+}
+@keyframes cfFall{
+  0%{transform:translateY(-15px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(108vh) rotate(720deg);opacity:0;}
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════ */
+@media(max-width:480px){
+  .lbr{grid-template-columns:38px 1fr 70px 60px;padding:.75rem .85rem;gap:.4rem;}
+  .lbr.hdr{padding:.6rem .85rem;}
+  .lbr.me{padding-left:calc(.85rem - 3px);}
+  .pod-medal{font-size:1.6rem;}
+  .pod-av{width:42px;height:42px;font-size:1rem;}
+  .pod-name{font-size:.78rem;}
+  .pod-pct{font-size:.95rem;}
+  .pod{padding:.9rem .55rem .75rem;}
+  .srow{gap:.5rem;}
+  .sst{padding:.65rem .25rem;}
+  .sst .sv{font-size:1.5rem;}
+}
+
+/* Selection */
+::selection{background:rgba(91,127,255,.4);color:#fff;}
+[data-theme="light"] ::selection{background:rgba(76,110,240,.25);color:#0f1535;}
+
+/* Scrollbar (subtle) */
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--brd);border-radius:10px;}
+
+/* ════════════════════════════════════════════════════════════
+   LIGHT THEME — matn ranglari overrride (#c4d0ff light fonda yo'qoladi)
+   ════════════════════════════════════════════════════════════ */
+[data-theme="light"] .tag,
+[data-theme="light"] .t-lbl,
+[data-theme="light"] .qv-num,
+[data-theme="light"] .lbme{
+  color:var(--acc-d);
+}
+[data-theme="light"] .qnum{color:#fff;} /* qnum bg ko'k bo'lgani uchun oq qoldi */
+[data-theme="light"] .ob{color:var(--txt);}
+[data-theme="light"] .ob .lt{background:var(--brd-2);color:var(--txt-2);}
+[data-theme="light"] .qv-opt{color:var(--mute);}
+[data-theme="light"] .qv-opt.cor{color:var(--grn);}
+[data-theme="light"] .lb-h1{
+  background:linear-gradient(135deg,var(--txt),var(--gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+[data-theme="light"] .logo{
+  background:linear-gradient(135deg,var(--txt) 0%,var(--txt-2) 30%,var(--acc) 60%,var(--a2) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  filter:drop-shadow(0 4px 24px rgba(76,110,240,.2));
+}
+[data-theme="light"] .hero-sub{color:var(--txt-2);}
+[data-theme="light"] .sdesc{color:var(--txt-2);}
+[data-theme="light"] .modal-msg{color:var(--txt-2);}
+[data-theme="light"] .qtxt{color:var(--txt);}
+[data-theme="light"] .qv-q{color:var(--txt);}
+[data-theme="light"] .rv-q{color:var(--txt);}
+[data-theme="light"] .ob{background:rgba(15,21,53,.02);}
+[data-theme="light"] .ob:hover:not(:disabled){background:rgba(76,110,240,.08);}
+[data-theme="light"] .qv-opt{background:rgba(15,21,53,.03);}
+[data-theme="light"] .sst{background:rgba(15,21,53,.03);}
+[data-theme="light"] .lbr.hdr{background:rgba(15,21,53,.03);color:var(--mute);}
+[data-theme="light"] .lbr:not(.hdr):hover{background:rgba(76,110,240,.05);}
+[data-theme="light"] .lbr.me{background:linear-gradient(90deg,rgba(76,110,240,.08),rgba(76,110,240,.02))!important;}
+[data-theme="light"] .ldet{background:rgba(15,21,53,.02);}
+[data-theme="light"] .inp{background:rgba(15,21,53,.02);}
+[data-theme="light"] .inp:focus{background:rgba(76,110,240,.04);}
+[data-theme="light"] .sv-search{background:rgba(15,21,53,.02);}
+[data-theme="light"] .btn-s{background:rgba(15,21,53,.04);color:var(--txt-2);}
+[data-theme="light"] .btn-s:hover{background:rgba(76,110,240,.08);color:var(--acc);}
+[data-theme="light"] .fb{background:rgba(15,21,53,.03);}
+[data-theme="light"] .fb.on,[data-theme="light"] .fb:hover{
+  background:rgba(76,110,240,.1);
+  color:var(--acc-d);
+}
+[data-theme="light"] .chip{background:linear-gradient(135deg,rgba(15,21,53,.04),rgba(15,21,53,.02));}
+[data-theme="light"] .usr-stat{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(248,250,255,.5));}
+[data-theme="light"] .toast{background:linear-gradient(180deg,#fff,#f8faff);}
+[data-theme="light"] .modal{background:linear-gradient(180deg,#fff,#f8faff);}
+[data-theme="light"] .modal-bd{background:rgba(15,21,53,.4);}
+[data-theme="light"] .bg-grid{opacity:.4;}
+[data-theme="light"] .pod.p1{background:linear-gradient(180deg,rgba(217,119,6,.12),rgba(217,119,6,.03));}
+[data-theme="light"] .pod.p2{background:linear-gradient(180deg,rgba(170,184,194,.12),rgba(170,184,194,.03));}
+[data-theme="light"] .pod.p3{background:linear-gradient(180deg,rgba(180,90,30,.12),rgba(180,90,30,.03));}
+
+/* ════════════════════════════════════════════════════════════
+   THEME TOGGLE BUTTON (sticky, har sahifada)
+   ════════════════════════════════════════════════════════════ */
+.theme-toggle{
+  position:fixed;
+  top:1.2rem;
+  right:1.2rem;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(20,24,40,.85),rgba(15,19,32,.85));
+  border:1px solid var(--brd);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:100;
+  font-size:1.05rem;
+  transition:transform .3s cubic-bezier(.34,1.5,.64,1), border-color .3s var(--ease), background .5s var(--ease);
+  box-shadow:var(--sh-sm);
+}
+.theme-toggle:hover{
+  transform:scale(1.08) rotate(15deg);
+  border-color:var(--acc);
+}
+.theme-toggle:active{transform:scale(.94);}
+[data-theme="light"] .theme-toggle{
+  background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(248,250,255,.88));
+}
+.tt-icon{
+  position:absolute;
+  transition:opacity .35s var(--ease), transform .45s cubic-bezier(.34,1.5,.64,1);
+}
+.tt-dark{opacity:1;transform:rotate(0) scale(1);}
+.tt-light{opacity:0;transform:rotate(180deg) scale(.5);}
+[data-theme="light"] .tt-dark{opacity:0;transform:rotate(-180deg) scale(.5);}
+[data-theme="light"] .tt-light{opacity:1;transform:rotate(0) scale(1);}
+
+@media(max-width:520px){
+  .theme-toggle{
+    top:.9rem;
+    right:.9rem;
+    width:38px;
+    height:38px;
+    font-size:.95rem;
+  }
+}
+::-webkit-scrollbar-thumb:hover{background:var(--brd-2);}
 </style>
 </head>
 <body>
 
-<div class="bg-orb o1"></div>
-<div class="bg-orb o2"></div>
+<!-- BACKGROUND LAYERS -->
+<div class="bg-layer bg-aurora"></div>
+<div class="bg-layer bg-cursor"></div>
+<div class="bg-layer bg-grid"></div>
+<div class="bg-layer bg-grain"></div>
 <canvas id="cv"></canvas>
 
-<!-- ══════════ NAME ══════════ -->
+<!-- SVG GRADIENT DEFS -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5b7fff"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN: NAME (Welcome)
+     ══════════════════════════════════════════════ -->
 <div class="scr on" id="s-name">
-  <div class="hero anim-up">
-    <div class="tag" style="margin-bottom:1rem;">🎓 5 fan · 600+ savol · Jonli reyting</div>
-    <div class="logo">TestHub UZ</div>
-    <div class="hero-sub">Bilimingizni sinang · Reytingda birinchi o'ringa chiqing!</div>
+  <div class="hero">
+    <div class="tag tag-pulse" style="margin-bottom:1.4rem;"><span style="margin-left:.2rem;">5 fan · 600+ savol · Jonli reyting</span></div>
+    <div class="logo">TestHub<br>UZ</div>
+    <div class="hero-sub">Bilimingizni sinang. Reytingda yuqori chiqing.<br>Doim yangi savollar — har safar boshqacha.</div>
   </div>
-  <div class="glass name-box anim-up" style="padding:2rem 1.8rem;animation-delay:.1s">
-    <h2 style="font-size:1.22rem;margin-bottom:.28rem;">Xush kelibsiz! 👋</h2>
-    <p class="hint" style="color:var(--mute);font-size:.8rem;margin-bottom:1.5rem;line-height:1.6;">
-      Ismingizni kiriting — natijalaringiz reytingda saqlanib, barchaga ko'rinadi.
-    </p>
+  <div class="glass name-box" style="padding:2rem 1.8rem;animation:cardIn .55s var(--ease-out) .15s both;">
+    <h2>Xush kelibsiz 👋</h2>
+    <p class="hint">Ismingizni kiriting — natijalaringiz reytingda saqlanib, barchaga ko'rinadi.</p>
     <input class="inp" id="ni" placeholder="Ismingiz (masalan: Abdurasul)" maxlength="30" autocomplete="off"/>
-    <button class="btn btn-p" style="width:100%;margin-top:.8rem;" onclick="doEnter()">Kirish →</button>
+    <button class="btn btn-p" style="width:100%;margin-top:.85rem;" onclick="doEnter()">Kirish →</button>
     <div class="divider">yoki</div>
     <button class="btn btn-s" style="width:100%;" onclick="openLBguest()">👀 Reytingni ko'rish</button>
   </div>
 </div>
 
-<!-- ══════════ HOME ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: HOME
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-home">
   <div class="topbar">
     <div class="chip">
       <div class="av" id="ua"></div>
-      <span style="font-size:.86rem;font-weight:600;" id="unh"></span>
+      <span style="font-size:.88rem;font-weight:600;" id="unh"></span>
+      <div class="streak" id="streak-chip" style="display:none;margin-left:.2rem;">
+        <span class="streak-emo">🔥</span><span id="streak-val">0</span>
+      </div>
     </div>
     <button class="btn btn-s" onclick="logout()">← Chiqish</button>
   </div>
-  <div class="menu-grid" id="menu-g">
-    <div class="mcard mc-test" onclick="go('s-subj-test')" style="animation-delay:0s">
+
+  <div class="sec-ttl">⚡ Asosiy bo'limlar</div>
+  <div class="menu-grid">
+    <div class="mcard mc-test" onclick="go('s-subj-test')" style="animation-delay:.05s">
+      <div class="mcard-arrow">→</div>
       <span class="mcard-icon">✏️</span>
       <div class="mcard-name">Test ishlash</div>
       <div class="mcard-desc">25 ta tasodifiy savol · Natija reytingga qo'shiladi</div>
     </div>
-    <div class="mcard mc-study" onclick="go('s-subj-study')" style="animation-delay:.06s">
+    <div class="mcard mc-study" onclick="go('s-subj-study')" style="animation-delay:.1s">
+      <div class="mcard-arrow">→</div>
       <span class="mcard-icon">📖</span>
       <div class="mcard-name">O'rganish</div>
-      <div class="mcard-desc">Barcha savol va javoblarni ko'rish · Qidiruv mavjud</div>
+      <div class="mcard-desc">Barcha savol va javoblar · Qidiruv mavjud</div>
     </div>
-    <div class="mcard mc-lb" onclick="openLBlogged()" style="animation-delay:.12s">
+    <div class="mcard mc-lb" onclick="openLBlogged()" style="animation-delay:.15s">
+      <div class="mcard-arrow">→</div>
       <span class="mcard-icon">🏆</span>
       <div class="mcard-name">Reyting</div>
-      <div class="mcard-desc">Kimlar qaysi o'rinda · Batafsil tahlil</div>
+      <div class="mcard-desc">Top-3 podium · Batafsil tahlil</div>
     </div>
-    <div class="mcard mc-admin" onclick="go('s-admin')" style="animation-delay:.18s">
+    <div class="mcard mc-admin" onclick="go('s-admin')" style="animation-delay:.2s">
+      <div class="mcard-arrow">→</div>
       <span class="mcard-icon">👑</span>
       <div class="mcard-name">Admin</div>
       <div class="mcard-desc">Muammo? Savol? Admin bilan bog'laning</div>
@@ -369,25 +1806,31 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
   </div>
 </div>
 
-<!-- ══════════ SUBJ TEST ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: SUBJECT — TEST
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-subj-test">
   <div class="topbar">
     <button class="btn btn-s" onclick="go('s-home')">← Orqaga</button>
-    <span style="font-weight:700;font-size:.92rem;">✏️ Fan tanlang</span>
+    <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.05rem;">✏️ Test uchun fan tanlang</span>
   </div>
   <div class="subj-grid" id="sg-test"></div>
 </div>
 
-<!-- ══════════ SUBJ STUDY ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: SUBJECT — STUDY
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-subj-study">
   <div class="topbar">
     <button class="btn btn-s" onclick="go('s-home')">← Orqaga</button>
-    <span style="font-weight:700;font-size:.92rem;">📖 Fan tanlang</span>
+    <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.05rem;">📖 O'rganish uchun fan tanlang</span>
   </div>
   <div class="subj-grid" id="sg-study"></div>
 </div>
 
-<!-- ══════════ TEST ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: TEST IN PROGRESS
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-test">
   <div class="t-hdr">
     <span class="t-lbl" id="tsl"></span>
@@ -398,27 +1841,57 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
   <div class="qwrap" id="qc"></div>
 </div>
 
-<!-- ══════════ SCORE ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: SCORE
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-score">
-  <div class="sbox glass" style="padding:2.2rem 1.8rem;">
+  <div class="sbox glass">
     <div class="emo" id="se"></div>
     <h2 id="st"></h2>
     <p class="sdesc" id="sm"></p>
-    <div class="ring" id="sr"><div class="rpct" id="sn"></div></div>
+    <div class="ring">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <circle class="r-bg" cx="80" cy="80" r="70"/>
+        <circle class="r-fg" cx="80" cy="80" r="70" id="r-fg"/>
+      </svg>
+      <div class="rpct">
+        <div class="rpct-v" id="sn">0%</div>
+        <div class="rpct-l">Natija</div>
+      </div>
+    </div>
     <div class="srow">
-      <div class="sst"><div class="sv" style="color:var(--grn)" id="sc2"></div><div class="sl">To'g'ri</div></div>
-      <div class="sst"><div class="sv" style="color:var(--red)" id="sw"></div><div class="sl">Noto'g'ri</div></div>
+      <div class="sst"><div class="sv" style="color:var(--grn)" id="sc2">0</div><div class="sl">To'g'ri</div></div>
+      <div class="sst"><div class="sv" style="color:var(--red)" id="sw">0</div><div class="sl">Noto'g'ri</div></div>
       <div class="sst"><div class="sv" style="color:var(--gold)">25</div><div class="sl">Jami</div></div>
     </div>
     <div class="brow">
       <button class="btn btn-p" onclick="restart()">🔄 Qayta</button>
+      <button class="btn btn-s" id="rv-btn" onclick="openReview()" style="display:none;">👁 Ko'rib chiqish</button>
       <button class="btn btn-s" onclick="go('s-subj-test')">📚 Fanlar</button>
       <button class="btn btn-s" onclick="openLBlogged()">🏆 Reyting</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ STUDY VIEW ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: REVIEW WRONG ANSWERS
+     ══════════════════════════════════════════════ -->
+<div class="scr" id="s-review">
+  <div class="rv-wrap">
+    <div class="rv-hdr">
+      <div>
+        <div class="rv-h1">📝 Xatolar tahlili</div>
+        <div class="rv-sub" id="rv-sub">—</div>
+      </div>
+      <button class="btn btn-s" onclick="go('s-score')">← Orqaga</button>
+    </div>
+    <div id="rv-list"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN: STUDY VIEW
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-study-view">
   <div class="sv-wrap">
     <div class="sv-hdr">
@@ -427,7 +1900,7 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
         <div class="sv-sts" id="sv-sts"></div>
       </div>
       <div style="display:flex;gap:.55rem;flex-wrap:wrap;">
-        <button class="btn btn-g" style="font-size:.8rem;padding:.58rem 1rem;" id="sv-tb">✏️ Test</button>
+        <button class="btn btn-g" id="sv-tb">✏️ Test boshlash</button>
         <button class="btn btn-s" onclick="go('s-subj-study')">← Orqaga</button>
       </div>
     </div>
@@ -437,7 +1910,9 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
   </div>
 </div>
 
-<!-- ══════════ LEADERBOARD ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: LEADERBOARD
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-lb">
   <div class="lb-wrap">
     <div class="lb-top">
@@ -447,27 +1922,32 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
       </div>
       <button class="btn btn-s" id="lb-back">← Orqaga</button>
     </div>
+
+    <div class="podium" id="podium" style="display:none;"></div>
+
     <div class="frow" id="fr"></div>
     <div class="lb-tbl" id="lt"></div>
   </div>
 </div>
 
-<!-- ══════════ ADMIN ══════════ -->
+<!-- ══════════════════════════════════════════════
+     SCREEN: ADMIN
+     ══════════════════════════════════════════════ -->
 <div class="scr" id="s-admin">
-  <div class="topbar" style="max-width:420px;">
+  <div class="topbar" style="max-width:440px;">
     <button class="btn btn-s" onclick="go('s-home')">← Orqaga</button>
-    <span style="font-weight:700;font-size:.9rem;">👑 Admin Panel</span>
+    <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.95rem;">👑 Admin Panel</span>
   </div>
-  <div class="admin-box anim-up">
-    <div class="glass" style="padding:2rem 1.8rem;">
+  <div class="admin-box">
+    <div class="glass" style="padding:2.2rem 1.9rem;">
       <div class="admin-avatar">👑</div>
       <div class="admin-name">@lide88</div>
       <div class="admin-role">TestHub UZ · Platform Administrator</div>
       <a class="tg-btn" href="https://t.me/Lide88" target="_blank" rel="noopener">
         <span class="tg-icon">✈️</span>
-        Telegram da yozing: @lide88
+        Telegramda yozing: @lide88
       </a>
-      <p style="font-size:.78rem;color:var(--mute);line-height:1.6;margin-top:.5rem;">
+      <p style="font-size:.82rem;color:var(--mute);line-height:1.65;margin-top:1rem;">
         📌 Savol, taklif yoki muammo bo'lsa — admin bilan bog'laning.<br>
         🕐 Ish vaqti: 09:00–22:00
       </p>
@@ -475,9 +1955,26 @@ body{background:var(--bg);color:var(--txt);font-family:"Syne",system-ui,sans-ser
   </div>
 </div>
 
+<!-- TOAST -->
 <div class="toast" id="tst"></div>
+
+<!-- CUSTOM MODAL -->
+<div class="modal-bd" id="mbd">
+  <div class="modal">
+    <div class="modal-ic" id="m-ic">⚠️</div>
+    <div class="modal-ttl" id="m-ttl">Tasdiqlang</div>
+    <div class="modal-msg" id="m-msg">Davom etmoqchimisiz?</div>
+    <div class="modal-btns">
+      <button class="btn btn-s" id="m-no">Bekor qilish</button>
+      <button class="btn btn-p" id="m-yes" style="padding:.7rem 1.4rem;font-size:.9rem;">Tasdiqlash</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// ═══════ BANKS ═══════
+/* ════════════════════════════════════════════════════════════
+   BANKS (savol bazasi)
+   ════════════════════════════════════════════════════════════ */
 const BANKS = {
   en: [{"q":"She ___ a teacher.","a":"is","o":["is","am","are","be"]},
 {"q":"They ___ from Uzbekistan.","a":"are","o":["are","is","am","be"]},
@@ -1123,99 +2620,265 @@ const BANKS = {
 {"q":"Falsafa fanining yakuniy maqsadi nima?","a":"Komil insonni shakllantirish","o":["Komil insonni shakllantirish","Faqat bilim berish","Faqat axborot yetkazish","Faqat tarixni o‘rganish"]},
 {"q":"Falsafaning amaliy ahamiyati nimada?","a":"Hayotiy muammolarni ongli hal etishda","o":["Hayotiy muammolarni ongli hal etishda","Faqat nazariyada","Faqat tarixda","Faqat bahsda"]},
 {"q":"Axloqning asosiy mezoni nima?","a":"Ezgulik va yovuzlik","o":["Ezgulik va yovuzlik","Foyda","Kuch","Hokimiyat"]}],
+ay: [{"q":"Tanqidiy fikrlashda xolis (obyektiv) tanqidchi va noxolis (subyektiv) tanqidchi o'rtasidagi asosiy farq nimada?","a":"Xolis tanqidchi dalillarga asoslanadi, noxolis tanqidchi shaxsiy fikr va","o":["Xolis tanqidchi faqat ijobiy baho beradi, noxolis tanqidchi esa salbiy","Xolis tanqidchi dalillarga asoslanadi, noxolis tanqidchi shaxsiy fikr va","hissiyotlarga asoslanadi","Xolis tanqidchi faqat ilmiy maqolalarni tahlil qiladi, noxolis esa barcha matnlarni"]},{"q":"Tuzilishi bo'yicha reja turlari nechiga bo'linadi?","a":"2 turga","o":["3 turga","2 turga","4 turga","5 turga"]},{"q":"Murakkab ko'rinishdagi rejalar nechta tarkibiy qismdan iborat bo'ladi?","a":"3 ta","o":["3 ta","4 ta","5 ta","2 ta"]},{"q":"Ilmiy asar, maqola, doklad va shu kabilardagi asosiy g'oyalarning qisqa va lo'nda ifodasi nima deyiladi?","a":"Tezis","o":["Maqola","Konspekt","Tezis","Taqriz"]},{"q":"Aniqlik, qisqalik, ifodalilik, mantiqiylik, maqsadga yo'naltirilganlik nimaning asosiy bosqichlari?","a":"Rejaning","o":["Rejaning","Matnning","Konspektning","Referatning"]},{"q":"Rejaning turlari to'g'ri berilgan qatorni belgilang.?","a":"Aniqlik, qisqalik, ifodalilik, mantiqiylik va maqsadga yo'naltirilganlik.","o":["Aniqlik, qisqalik, ifodalilik, mantiqiylik va maqsadga yo'naltirilganlik.","Qisqalik, maqsadga yo'naltirilganlik va mantiqiylik","Ifodalilik, aniqlik va mantiqiylik.","Aniqlik va qisqalik"]},{"q":"Sodda ko'rinishdagi rejalarni tartibini belgilashning eng maqbul yo'li to'g'ri ko'rsatilgan javobni toping.?","a":"Arab raqamlarini qo'yib, ulardan so'ng nuqta ishlatishlishdir;","o":["Rejadagi gaplar tarkibini 1), 2), 3)…. shaklida belgilash;","Rejalarni a), b), d) tarzida harflar bilan belgilash va ulardan keyin yarim qavs qo'yish;","Rejalarni rim raqamlari bilan tartiblash;","Arab raqamlarini qo'yib, ulardan so'ng nuqta ishlatishlishdir;"]},{"q":"Kurs ishida asosiy qism ish umumiy hajmining necha foizini tashkil etadi?","a":"60 foizi","o":["60 foizi","65 foizi","55 foizi","66 foiz"]},{"q":"Kurs ish rejasida asosiy qism nechta savoldan iborat bo'ladi?","a":"3-5 ta","o":["3-5 ta","2-4 ta","4-6 ta","5- 8 ta"]},{"q":"Ma'ruza so'zining ma'nosi nima?","a":"Axborot biror mavzuda ko'pchilik oldida so'zlangan nutq, doklad.","o":["Axborot biror mavzuda ko'pchilik oldida so'zlangan nutq, doklad.","Hisobot","Axborot","Tezisning bir ko'rinishi"]},{"q":"Tezis so'zining ma'nosi nima va uning matni hajmi qanchagacha bo'ladi?","a":"grekcha so'z, qoida, isbot 2 betgacha","o":["grekcha so'z, qoida, isbot 2 betgacha","forscha so'z, ma'lum qilaman, 4 betgacha","ruscha so'z, axborot, 3 betgacha","fransuzcha so'z, xabar beraman, 2 betgacha"]},{"q":"«Taqriz» qaysi tilning atamasi va u qanday ma'nolarni beradi?","a":"Arabcha so'z, «ijobiy baho» ma'nolarini beradi;","o":["Arabcha so'z, «ijobiy baho» ma'nolarini beradi;","Tojikcha so'z, «asarning qimmatini belgilash»;","Forscha so'z, «asarni tahlil etish»;","Forscha - tojikcha so'z, «asarning o'rnini aniqlash»;"]},{"q":"Referatda yagona fikr hukmronlik qiladimi yoki fikrlar majmui beriladimi?","a":"Yagona fikr hukmronlik qiladi va u to'liq isbot etiladi.","o":["Yagona fikr hukmronlik qiladi va u to'liq isbot etiladi.","Kamida 5 ta fikr aytiladi","Fikrlar majmui beriladi","Faqatgina tanqidiy fikr beriladi"]},{"q":"«Referat» qaysi tilning atamasi va u qanday ma'nolarni beradi?","a":"lotincha so'z, «bildirish, xabar berish»","o":["lotincha so'z, «bildirish, xabar berish»","Arabcha so'z, «bayon qilish, so'zlash, tasdiqlash» ma'nolarini beradi.","Forscha so'z, «asarni tahlil etish»","Forscha - tojikcha so'z, «asarning o'rnini aniqlash»"]},{"q":"Ilmiy darajani belgilovchi ilmiy-tadqiqiy ish turini (janrini) belgilang.?","a":"dissertatsiya","o":["dissertatsiya","avtoreferat","ilmiy ma'ruza","monografiya"]},{"q":"Taqriz qaysi uslubda yoziladi?","a":"Ilmiy uslubda.","o":["Ilmiy uslubda.","Ommabop uslubda","Rasmiy uslubda","So'zlashuv uslubida"]},{"q":"Tadqiqot olib borish nimadan boshlanadi?","a":"Faktlar to'plashdan boshlanadi.","o":["Faktlar to'plashdan boshlanadi.","Ma'lumotlar o'rganiladi","Sistemalashtiriladi","Izlashtirishdan boshlanadi"]},{"q":"Fundamental, amaliy tadqiqotlar, ilmiy izlanishlar nimaning turlari?","a":"Ilmiy ish turlari","o":["Ilmiy ish turlari","An'anaviy ish turlari","Amaliy ish turlari","Tabiiy fanlar turlari"]},{"q":"Taqdimotlardan ko'zlangan maqsad nimaga qaratilgan bo'ladi?","a":"Ilmiy muammo (masala) yechimining to'g'riligini ko'risata bilish bo'lib, uning natijasini tasdiqlashi yoki inkor etishi mumkingiga.","o":["Ilmiy muammo (masala) yechimining to'g'riligini ko'risata bilish bo'lib, uning natijasini tasdiqlashi yoki inkor etishi mumkingiga.","Eksperimental va nazariy tadqiqotlar natijalarini solishtirib (taqqoslab) ko'rib ularni bir biriga mos kelishiga.","Ilmiy gipotezaga o'zgartirish kiritish yoki gipotezani inkor etishga.","Tadqiqot maqsadi va vazifalariga to'la javob berishiga."]},{"q":"Taqdimot so'zi qaysi tildan olingan va qanday ma'noni bildiradi?","a":"prezintatsiya lot. praesentatio -taqdim etish.","o":["prezintatsiya lot. praesentatio -taqdim etish.","prezintatsiya yunon. praesentatio -taqdim etish.","prezintatsiya italyan. praesentatio -taqdim etish.","prezintatsiya rus. praesentatio -taqdim etish."]},{"q":"APA uslubida matn ichida havola berish qanday amalga oshiriladi?","a":"(Muallif, yil) ko'rinishida","o":["[Raqam] ko'rinishida","(Muallif, yil) ko'rinishida","(Muallif sahifa raqami) ko'rinishida","Futnot orqali"]},{"q":"Akademik yozuvda havola berishning nechta asosiy uslubi qo'llanmada keltirilgan?","a":"5 ta","o":["3 ta","4 ta","5 ta","6 ta"]},{"q":"Dissertatsiya va kurs ishi o'rtasidagi asosiy farq nimada?","a":"Dissertatsiyada yangilik (originality) talab qilinadi, kurs ishida esa fan","o":["Kurs ishi uzunroq yoziladi","Dissertatsiyada yangilik (originality) talab qilinadi, kurs ishida esa fan","konsepsiyalarini o'rganish talab etiladi","Kurs ishi ilmiy jurnallarda nashr etiladi"]},{"q":"Ilmiy maqolada annotatsiya (abstract) nechta so'zdan iborat bo'lishi kerak?","a":"80-250 so'z","o":["50-100 so'z","80-250 so'z","300-500 so'z","500-1000 so'z"]},{"q":"Ilmiy maqolada metodologiya qismini batafsil tavsiflashning maqsadi nima?","a":"Boshqalar tadqiqotni takrorlashlari uchun imkoniyat yaratish","o":["Maqolani uzunroq qilish","Boshqalar tadqiqotni takrorlashlari uchun imkoniyat yaratish","Faqat statistik ma'lumotlarni ko'rsatish","Annotatsiyani uzaytirish"]},{"q":"Gipotezaning asosiy xususiyatlaridan biri qaysi?","a":"Sinovchanlik (tajriba, kuzatuv yoki tahlil bilan tekshirish mumkin bo'lishi)","o":["To'liq isbotlanganlik","Sinovchanlik (tajriba, kuzatuv yoki tahlil bilan tekshirish mumkin bo'lishi)","Mutlaq haqiqat","Shaxsiy fikr"]},{"q":"Akademik yozuvda dalilning asosiy vazifasi nima?","a":"Fikrlarni asosli va ishonchli qilish","o":["Matnni uzunroq qilish","Fikrlarni asosli va ishonchli qilish","Shaxsiy fikrlarni ifodalash","Adabiyotlar ro'yxatini to'ldirish"]},{"q":"Havola berishning asosiy maqsadi nima?","a":"Mualliflik huquqini hurmat qilish va o'quvchiga ma'lumot manbasini","o":["Matnni murakkabroq qilish","Mualliflik huquqini hurmat qilish va o'quvchiga ma'lumot manbasini","aniqlash imkonini berish","Faqat o'qituvchini xursand qilish"]},{"q":"Plagiatning qaysi turi boshqa birovning matnini o'zlashtirib, o'z asari sifatida taqdim etishdir?","a":"To'liq plagiat","o":["Qisman plagiat","To'liq plagiat","O'z-o'zini plagiat","Noto'g'ri havola"]},{"q":"Ilmiy maqolaning asosiy qismlaridan qaysi biri tadqiqotning maqsadi, usuli va natijalarini qisqacha ifodalaydi?","a":"Annotatsiya (muxtasar bayon)","o":["Kirish","Annotatsiya (muxtasar bayon)","Asosiy qism","Xulosa"]},{"q":"Parafraz qilish nima?","a":"Fikrni o'z so'zlaringiz bilan qayta ifodalash","o":["Matnni bevosita iqtibos qilish","Fikrni o'z so'zlaringiz bilan qayta ifodalash","Manbani ko'rsatmasdan foydalanish","Matnni o'zgartirmasdan nusxa ko'chirish"]},{"q":"MLA uslubi qaysi sohalarda keng qo'llanadi?","a":"Gumanitar va tilshunoslik fanlarida","o":["Psixologiya va ijtimoiy fanlarda","Gumanitar va tilshunoslik fanlarida","Texnika va muhandislikda","Tabiat fanlarida"]},{"q":"Ilmiy maqolada kalit so'zlar nechta bo'lishi tavsiya etiladi?","a":"5-7 ta","o":["1-2 ta","3-4 ta","5-7 ta","10-15 ta"]},{"q":"Akademik yozuvda qaysi yozuv turi ilmiy tadqiqotga asoslangan va ishonchli manbalardan foydalanish talab qilinadi?","a":"Tadqiqot maqolasi (Research Paper)","o":["Esse","Tadqiqot maqolasi (Research Paper)","Referat","Annotatsiya"]},{"q":"Akademik yozuvda 'deskriptiv gipoteza' nima qiladi?","a":"Ma'lum bir hodisa yoki faktni tavsiflaydi [TO'G'RI JAVOB]","o":["Kelajakdagi natijalarni taxmin qiladi","Ma'lum bir hodisa yoki faktni tavsiflaydi [TO'G'RI JAVOB]","Hodisalar o'rtasidagi sabab-oqibat munosabatlarini tushuntiradi","Nazariyani isbotlaydi"]},{"q":"Ilmiy maqolada xulosa qismida nima qilinmasligi kerak?","a":"Yangi ma'lumot kiritish","o":["Asosiy natijalarni umumlashtirish","Yangi ma'lumot kiritish","Kelgusidagi tadqiqotlar uchun tavsiyalar berish","Tadqiqot ahamiyatini ko'rsatish"]},{"q":"Akademik yozuvda 'o'z-o'zini plagiat' nima?","a":"Oldingi yozgan ishni yangi ish sifatida ko'rsatish","o":["Boshqa muallifning ishini o'zlashtirish","Oldingi yozgan ishni yangi ish sifatida ko'rsatish","Manbani noto'g'ri ko'rsatish","Iqtibos belgisiz matn kiritish"]},{"q":"Tanqidiy fikrlashni rivojlantirishning eng samarali usuli qaysi?","a":"Tanqidiy o'qish, mantiqiy tahlil va bahs-munozaralarda ishtirok etish","o":["Faqat bitta manbadan o'qish","Tanqidiy o'qish, mantiqiy tahlil va bahs-munozaralarda ishtirok etish","Hech narsa o'qimaslik","Faqat ijtimoiy tarmoqlardan ma'lumot olish"]},{"q":"Akademik yozuvda 'akademik ohang' deganda nima tushuniladi?","a":"Matnda ishlatiladigan til va uslubning umumiy ohangi","o":["Musiqiy ohang","Matnda ishlatiladigan til va uslubning umumiy ohangi","Matnning hajmi","Matnning rangi"]},{"q":"Harvard uslubi qaysi sohalarda keng ishlatiladi?","a":"Iqtisodiyot va tabiiy fanlarda","o":["Faqat psixologiyada","Iqtisodiyot va tabiiy fanlarda","Faqat tarixda","Faqat adabiyotda"]},{"q":"Ilmiy maqolada annotatsiya va summary o'rtasidagi farq nimada?","a":"Annotatsiya ilmiy maqola, tezis yoki tadqiqot hisobotining qisqacha tahliliy hulosasi, summary esa har qanday matnning asosiy fikrlarini qayta bayon qilish","o":["Annotatsiya ilmiy maqola, tezis yoki tadqiqot hisobotining qisqacha tahliliy hulosasi, summary esa har qanday matnning asosiy fikrlarini qayta bayon qilish","Annotatsiya uzunroq, summary qisqaroq","Hech qanday farq yo'q","Annotatsiya faqat dissertatsiyada ishlatiladi"]},{"q":"Akademik yozuvda 'ixchamlik' talabi nimani anglatadi?","a":"Keraksiz takroriy va uzun jumlalardan qochish","o":["Matnni iloji boricha uzunroq qilish","Keraksiz takroriy va uzun jumlalardan qochish","Faqat qisqa jumlalardan foydalanish","Matnni qisqartirish"]},{"q":"Akademik yozuvda 'ob'ektivlik' deganda nima tushuniladi?","a":"Shaxsiy nuqtayi nazar emas, faktlar va dalillar asosiy rol o'ynaydi","o":["Shaxsiy fikr va hissiyotlarni ifodalash","Shaxsiy nuqtayi nazar emas, faktlar va dalillar asosiy rol o'ynaydi","Faqat o'z fikrini himoya qilish","Boshqalar fikrini rad etish"]},{"q":"Ilmiy maqolada 'adabiyotlar sharhi' (literature review) qaysi qismda joylashadi?","a":"Kirish qismida","o":["Faqat xulosada","Kirish qismida","Faqat annotatsiyada","Adabiyotlar ro'yxatida"]},{"q":"Akademik yozuvda 'tahliliy esse' nima?","a":"Mavzuni chuqur tahlil qiluvchi esse","o":["Mavzuni chuqur tahlil qiluvchi esse","Ikki narsani solishtiruvchi esse","Muammoni yechim taklif qiluvchi esse","Tarixiy faktlarni bayon qiluvchi esse"]},{"q":"Akademik yozuv nima?","a":"Ilmiy bilimni yozma shaklda ifodalash va keng ommaga taqdim etish","o":["Badiiy asar yozish san'ati","Ilmiy bilimni yozma shaklda ifodalash va keng ommaga taqdim etish","jarayoni","She'riyat yozish uslubi"]},{"q":"Yozuv qachon paydo bo'lgan?","a":"Taxminan miloddan avvalgi 4-ming yillikda","o":["Miloddan avvalgi 10-ming yillikda","Taxminan miloddan avvalgi 4-ming yillikda","Milodiy I asrda","O'rta asrlarda"]},{"q":"Belgilar va yozuv o'rtasidagi asosiy farq nima?","a":"Belgilar alohida ma'lumotni ifodalovchi ramzlar, yozuv esa tilni to'liq","o":["Belgilar va yozuv bir xil narsa","Belgilar alohida ma'lumotni ifodalovchi ramzlar, yozuv esa tilni to'liq","ifodalashga xizmat qiladigan tizim","Belgilar faqat raqamlar, yozuv esa harflar"]},{"q":"Piktografik yozuvda har bir belgi nima ifodalaydi?","a":"Muayyan obyekt yoki harakatni","o":["Alohida tovushni","Muayyan obyekt yoki harakatni","Butun bir gapni","Abstrakt tushunchani"]},{"q":"Qaysi yozuv tizimi har bir belgi butun bir so'z yoki g'oyani bildiradi?","a":"Ideografik (logografik) yozuv","o":["Alifboli yozuv","Bo'g'inli yozuv","Ideografik (logografik) yozuv","Piktografik yozuv"]},{"q":"Hozirda dunyoda eng keng tarqalgan yozuv turi qaysi?","a":"Lotin alifbosi","o":["Kiril alifbosi","Lotin alifbosi","Arab yozuvi","Xitoy ierogliflari"]},{"q":"Akademik yozuv talabalarga nima uchun kerak?","a":"Insho, kurs ishi, referat va dissertatsiyalarni yozish, ilmiy izlanishlar olib borish","o":["Faqat baho olish uchun","Insho, kurs ishi, referat va dissertatsiyalarni yozish, ilmiy izlanishlar olib borish","Faqat do'stlar bilan m uloqot qilish uchun","Faqat ijtimoiy tarmoqlarda post yozish uchun"]},{"q":"Akademik yozuvda 'tanqidiy fikrlash' nima?","a":"O'qilgan yoki eshitilgan har qanday ma'lumotga mantiqiy va tahliliy","o":["Boshqalar fikrini rad etish","O'qilgan yoki eshitilgan har qanday ma'lumotga mantiqiy va tahliliy","yondashish qobiliyati","Faqat ijobiy fikrlarni qabul qilish"]},{"q":"Tanqidiy fikrlovchi inson quyidagi savollardan qaysisini o'ziga berishi kerak?","a":"Bu ma'lumot qanchalik ishonchli? Bu fikrlarni kim ilgari surmoqda?","o":["Faqat 'Bu ma'lumot qanchalik ishonchli?'","Bu ma'lumot qanchalik ishonchli? Bu fikrlarni kim ilgari surmoqda?","Qarama-qarshi fikrlar bormi?","Faqat 'Bu ma'lumot menga yoqadimi?'"]},{"q":"Gipoteza nima?","a":"Hali to'liq isbotlanmagan, lekin ilmiy mantiqqa asoslangan taxminiy fikr","o":["To'liq isbotlangan fakt","Hali to'liq isbotlanmagan, lekin ilmiy mantiqqa asoslangan taxminiy fikr","Shaxsiy fikr","Badiiy tasavvur"]},{"q":"Gipotezaning qaysi xususiyati uning tajriba, kuzatuv yoki tahlil bilan tekshirish mumkin bo'lishini ta'kidlaydi?","a":"Sinovchanlik","o":["Aniqlik","Sinovchanlik","Asoslilik","Murakkablik"]},{"q":"Dalil nima?","a":"Berilgan fikr yoki tezisni asoslash va tasdiqlash uchun keltirilgan ma'lumot, fakt yoki tadqiqot natijasi","o":["Shaxsiy fikr","Berilgan fikr yoki tezisni asoslash va tasdiqlash uchun keltirilgan ma'lumot, fakt yoki tadqiqot natijasi","Badiiy tasvir","Reklama matni"]},{"q":"Akademik yozuvda dalil ishlatishning asosiy maqsadi nima?","a":"Fikrlarni asosli va ishonchli qilish, muallifning bilimini ko'rsatish","o":["Matnni uzunroq qilish","Fikrlarni asosli va ishonchli qilish, muallifning bilimini ko'rsatish","Faqat o'qituvchini xursand qilish","Matnni qisqartirish"]},{"q":"Havolasiz ma'lumot yoki fikr taqdim etish nima deb ataladi?","a":"Plagiat","o":["Parafraz","Plagiat","Iqtibos","Annotatsiya"]},{"q":"Plagiatning oqibatlaridan qaysi biri to'g'ri?","a":"Talaba yoki ilmiy xodim uchun intizomiy chora, ilmiy obro'ga putur","o":["Faqat maqtov olish","Talaba yoki ilmiy xodim uchun intizomiy chora, ilmiy obro'ga putur","yetkazish","Faqat rag'batlantirish"]},{"q":"Parafraz qilish orqali plagiatdan qochish mumkinmi?","a":"Ha, agar manba ko'rsatilsa va o'z so'zlari bilan qayta ifodalansa","o":["Yo'q, parafraz ham plagiat hisoblanadi","Ha, agar manba ko'rsatilsa va o'z so'zlari bilan qayta ifodalansa","Faqat iqtibos bilan","Hech qachon"]},{"q":"Akademik uslubda 'aniqlik' talabi nimani anglatadi?","a":"Fikrlar aniq va tushunarli ifoda qilinishi kerak","o":["Matnni murakkab so'zlar bilan yozish","Fikrlar aniq va tushunarli ifoda qilinishi kerak","Matnni iloji boricha uzunroq qilish","Faqat qisqa jumlalardan foydalanish"]},{"q":"Akademik yozuv turlaridan qaysi biri eng keng tarqalgan?","a":"Esse","o":["Dissertatsiya","Esse","Laboratoriya hisoboti","Monografiya"]},{"q":"Ilmiy maqola qanday maqsadda yoziladi?","a":"Ilmiy jamoatchilik bilan bilim almashish, muallifning ilmiy saviyasini","o":["Faqat o'qituvchini xursand qilish uchun","Ilmiy jamoatchilik bilan bilim almashish, muallifning ilmiy saviyasini","namoyish etish","Faqat pul ishlash uchun"]},{"q":"Ilmiy maqolaning annotatsiyasi nechta so'zdan iborat bo'lishi kerak?","a":"80-250 so'z","o":["50 dan kam","80-250 so'z","500 dan ko'p","1000 dan ko'p"]},{"q":"Ilmiy maqolada xulosa qismida nima qilinadi?","a":"Asosiy natijalar umumlashtiriladi va kelgusidagi tadqiqotlar uchun tavsiyalar beriladi","o":["Yangi ma'lumot kiritiladi","Asosiy natijalar umumlashtiriladi va kelgusidagi tadqiqotlar uchun tavsiyalar beriladi","Faqat sarlavha qayta yoziladi","Faqat annotatsiya takrorlanadi"]},{"q":"Ilmiy maqolada 'yangilik' (originality) nimani anglatadi?","a":"Avtorning o'zining taklifi, tadqiqot usuli yoki natijalari","o":["Matnni chiroyli bezash","Avtorning o'zining taklifi, tadqiqot usuli yoki natijalari","Faqat ko'proq sahifa yozish","Faqat ko'proq manba keltirish"]},{"q":"Referat nima?","a":"Muayyan kitob, maqola yoki tadqiqotning qisqa tahliliy xulosasi","o":["Yangi tadqiqot o'tkazish","Muayyan kitob, maqola yoki tadqiqotning qisqa tahliliy xulosasi","Badiiy asar yozish","She'riyat to'plami"]},{"q":"Abstract (annotatsiya) qayerda ishlatiladi?","a":"Ilmiy maqolalar, konferensiya materiallari, dissertatsiyalarda","o":["Faqat xatlarda","Ilmiy maqolalar, konferensiya materiallari, dissertatsiyalarda","Faqat gazetalarda","Faqat reklamalarda"]},{"q":"Kurs ishi va dissertatsiya o'rtasidagi asosiy farq nimada?","a":"Dissertatsiyada yangilik talab qilinadi, kurs ishida esa fan konsepsiyalarini o'rganish talab etiladi","o":["Kurs ishi uzunroq","Dissertatsiyada yangilik talab qilinadi, kurs ishida esa fan konsepsiyalarini o'rganish talab etiladi","Hech qanday farq yo'q","Kurs ishi ilmiy jurnallarda nashr etiladi"]},{"q":"Akademik yozuvda 'mantiqlilik' talabi nimani anglatadi?","a":"Fikrlar o'zaro bog'liq va asosli tarzda bayon qilinishi","o":["Matnni tasodifiy yozish","Fikrlar o'zaro bog'liq va asosli tarzda bayon qilinishi","Faqat qisqa jumlalardan foydalanish","Faqat uzun jumlalardan foydalanish"]},{"q":"Akademik yozuvda 'rasmiy til' talabi nimani anglatadi?","a":"Oddiy so'zlar o'rniga ilmiy va rasmiy ifodalar tanlash","o":["Slang va keng tarqalgan so'zlardan foydalanish","Oddiy so'zlar o'rniga ilmiy va rasmiy ifodalar tanlash","Faqat she'riy til ishlatish","Faqat og'zaki so'zlardan foydalanish"]},{"q":"Akademik yozuvda 'shaxsiy his-tuyg'ulardan qochish' talabi nimani anglatadi?","a":"Shaxsiy hissiyot va subyektiv baholardan voz kechish, faktlarga asoslanish","o":["Faqat shaxsiy fikrlarni ifodalash","Shaxsiy hissiyot va subyektiv baholardan voz kechish, faktlarga asoslanish","Faqat ijobiy fikrlarni yozish","Faqat salbiy fikrlarni yozish"]},{"q":"Ilmiy maqolada 'metodologiya' qismida nima bayon etiladi?","a":"Tadqiqot metodologiyasi (materiallar va usullar)","o":["Faqat xulosa","Tadqiqot metodologiyasi (materiallar va usullar)","Faqat sarlavha","Faqat annotatsiya"]},{"q":"Akademik yozuvda 'havola berish' nima uchun kerak?","a":"Mualliflik huquqini hurmat qilish, fikrlarning ishonchliligini kuchaytirish, plagiatdan saqlanish uchun","o":["Faqat matnni uzunroq qilish uchun","Mualliflik huquqini hurmat qilish, fikrlarning ishonchliligini kuchaytirish, plagiatdan saqlanish uchun","Faqat bezak uchun","Hech qanday maqsad yo'q"]},{"q":"Akademik yozuvda 'iqtibos keltirish' qanday amalga oshiriladi?","a":"Matnni qo'shtirnoq ichiga olib, muallif va manbani ko'rsatish","o":["Matnni o'zgartirmasdan nusxa ko'chirish","Matnni qo'shtirnoq ichiga olib, muallif va manbani ko'rsatish","Manbani ko'rsatmasdan foydalanish","Faqat o'z so'zlari bilan bayon qilish"]},{"q":"Akademik yozuvda 'adabiyotlar ro'yxati' nima uchun kerak?","a":"Foydalanilgan manbalarni ilmiy talablar asosida rasmiylashtirish uchun","o":["Faqat matnni uzunroq qilish uchun","Foydalanilgan manbalarni ilmiy talablar asosida rasmiylashtirish uchun","Faqat bezak uchun","Hech qanday maqsad yo'q"]},{"q":"Akademik yozuvda 'tanqidiy o'qish' nima?","a":"O'qilgan matnni chuqur tahlil qilish, asosiy g'oya va dalillarni ajratish","o":["Matnni shunchaki o'qish","O'qilgan matnni chuqur tahlil qilish, asosiy g'oya va dalillarni ajratish","Faqat sarlavhani o'qish","Faqat xulosani o'qish"]},{"q":"Akademik yozuvda 'argumentatsiya' nima?","a":"Fikrni dalillar bilan asoslash va isbotlash jarayoni","o":["Bahslashish","Fikrni dalillar bilan asoslash va isbotlash jarayoni","Faqat shaxsiy fikrni ifodalash","Faqat boshqalar fikrini rad etish"]},{"q":"Akademik yozuvning asosiy maqsadi nima?","a":"Ilmiy bilimni aniq, mantiqiy va dalillangan tarzda ifodalash va keng ommaga yetkazish","o":["Faqat o'qituvchini xursand qilish","Ilmiy bilimni aniq, mantiqiy va dalillangan tarzda ifodalash va keng ommaga yetkazish","Faqat pul ishlash","Faqat do'stlar bilan ulashish"]},{"q":"Tanqidiy fikrlashning asosiy vazifasi nima?","a":"O'qilgan yoki eshitilgan ma'lumotga mantiqiy va tahliliy yondashish","o":["O'qilgan yoki eshitilgan ma'lumotga mantiqiy va tahliliy yondashish","Har qanday ma'lumotni shunchaki qabul qilish","Faqat ijobiy fikrlarni qabul qilish","Boshqalar fikrini rad etish"]},{"q":"Ilmiy manbani tahlil qilish deganda nima tushuniladi?","a":"Manbadagi g'oya va dalillarni o'rganish","o":["Manbadagi g'oya va dalillarni o'rganish","Fikrni qayta yozish","Nashrni tahrir qilish","Manbalarga tayanish nima uchun muhim?"]},{"q":"Adabiyotlar ro'yxatini yozishda qaysi elementlar bo'lishi kerak?","a":"Muallif, nashr yili, nomi, manba","o":["Muallif, nashr yili, nomi, manba","Faqat muallif","Faqat sana","Ilmiy maqolada manbalar soni ko'p bo'lishi kerakmi?"]},{"q":"Ilmiy manbalar bilan ishlashning asosiy bosqichi:","a":"Topish, tanlash, tahlil qilish","o":["Topish, tanlash, tahlil qilish","Fikrni o'zgartirish","Qisqartirish","Takrorlash"]},{"q":"Iqtibosning maqsadi nima?","a":"Boshqa muallif fikridan dalil sifatida foydalanish","o":["Boshqa muallif fikridan dalil sifatida foydalanish","Matnni chiroyli ko'rsatish","Rang berish","Fikrni yashirish"]},{"q":"To'g'ridan-to'g'ri iqtibos bu:","a":"Muallif so'zlarini o'zgartirmasdan keltirish","o":["Muallif so'zlarini o'zgartirmasdan keltirish","Qisqargan shakl","Jadval","Xulosa"]},{"q":"Bilvosita iqtibos bu:","a":"Muallif fikrini o'z so'zlari bilan qayta ifodalash","o":["Muallif fikrini o'z so'zlari bilan qayta ifodalash","To'liq matnni nusxalash","Tahlilni kamaytirish","Annotatsiya"]},{"q":"Iqtibos keltirishda muallif nomi yozilmasa nima bo'ladi?","a":"Plagiat holati yuzaga keladi","o":["Plagiat holati yuzaga keladi","Fikr mustahkamlanadi","Matn qisqaradi","O'qish osonlashadi"]},{"q":"Havola berishning maqsadi nima?","a":"Manba qayerdan olinganini ko'rsatish","o":["Manba qayerdan olinganini ko'rsatish","Fikrni yashirish","Matnni bezatish","Dalilni kamaytirish"]},{"q":"Iqtiboslar soni ko'p bo'lishi to'g'rimi?","a":"Fikrga mos holda yetarli miqdorda bo'lishi kerak","o":["Fikrga mos holda yetarli miqdorda bo'lishi kerak","Qanchalik ko'p bo'lsa, shunchalik yaxshi","Butun matnni egallashi kerak","Umuman bo'lmasligi kerak"]},{"q":"Iqtibos matnida qo'shtirnoq ishlatiladimi?","a":"Ha","o":["Ha","Yo'q","Ba'zida","Faqat izohda"]},{"q":"Fikrni manbasiz yozish nimaga olib keladi?","a":"Plagiatga","o":["Plagiatga","Fikrning ishonchliligiga","Dalilni kuchaytirishga","Xulosa berishga"]},{"q":"Havola berish tartibi nimaga bog'liq?","a":"Tanlangan uslubga va manba turiga","o":["Tanlangan uslubga va manba turiga","Fikr hajmiga","Rangga","Muallif yoshiga"]},{"q":"Iqtibos keltirishda ehtiyot bo'lish sababi:","a":"Boshqa muallif huquqlarini buzmaslik uchun","o":["Boshqa muallif huquqlarini buzmaslik uchun","Fikrni yashirmaslik uchun","Jadvalni to'g'rilash uchun","Matnni cho'zish uchun"]},{"q":"Iqtibosning uzunligi qancha bo'lishi mumkin?","a":"Fikrga zarur bo'lgan qismigacha","o":["Fikrga zarur bo'lgan qismigacha","Butun sahifa","Fikrning yarimi","Cheksiz"]},{"q":"Dalillar qanday tartibda joylashtiriladi?","a":"Muhimlik darajasiga qarab","o":["Muhimlik darajasiga qarab","Alfavit tartibida","Ranglar bo'yicha","Tasodifiy"]},{"q":"Fikrni dalil bilan isbotlashda til qanday bo'lishi kerak?","a":"Aniq va mantiqiy","o":["Aniq va mantiqiy","Hissiy","Badiiy","Qisqa"]},{"q":"Adabiyotlar sharhi nima uchun yoziladi?","a":"Oldingi tadqiqotlarni tahlil qilish uchun","o":["Oldingi tadqiqotlarni tahlil qilish uchun","Fikrni yashirish uchun","Matnni cho'zish uchun","Iqtibosni kamaytirish uchun"]},{"q":"Adabiyotlar sharhining asosiy maqsadi:","a":"Ilgari o'rganilgan manbalarni umumlashtirish","o":["Ilgari o'rganilgan manbalarni umumlashtirish","Yangi fikr kiritish","Xulosa yozish","Fikrni qisqartirish"]},{"q":"Sharh yozishda qanday yondashuv muhim?","a":"Obyektiv","o":["Obyektiv","Subyektiv","Hissiy","Badiiy"]},{"q":"Adabiyotlar sharhida tahlil nimani beradi?","a":"Tadqiqotdagi bo'shliqni aniqlaydi","o":["Tadqiqotdagi bo'shliqni aniqlaydi","Fikrni yashiradi","Statistikani kamaytiradi","Dalillarni olib tashlaydi"]},{"q":"Argument nima?","a":"Dalilga asoslangan fikr","o":["Dalilga asoslangan fikr","Bahs","Fikrni rad etish","So'rov"]},{"q":"Akademik yozuvda muallifning fikrini qanday asoslash kerak?","a":"Ilmiy dalillar va iqtiboslar bilan","o":["Ilmiy dalillar va iqtiboslar bilan","Shaxsiy fikrlar va tajribalar bilan","Badiiy tasvirlar va metaforalar bilan","O'zgalar fikrini qabul qilib"]},{"q":"Fikrni dalillar bilan asoslash nimani anglatadi?","a":"Ilmiy ishonchlilikni oshirish","o":["Ilmiy ishonchlilikni oshirish","Fikrni cho'zish","Hissiyotga tayanish","Matnni bezash"]},{"q":"Argument turlaridan biri:","a":"Fakt va misollar asosidagi dalil","o":["Fakt va misollar asosidagi dalil","Tasvir","Jadval","Annotatsiya"]},{"q":"Fikrni isbotlashda 18tatistic ma'lumot nima beradi?","a":"Fikrni raqamlar bilan mustahkamlaydi","o":["Fikrni raqamlar bilan mustahkamlaydi","Matnni bezaydi","Fikrni qisqartiradi","O'quvchini chalg'itadi"]},{"q":"Qarama-qarshi fikrlarni tahlil qilish maqsadi:","a":"Har tomonlama yondashuvni ko'rsatish","o":["Har tomonlama yondashuvni ko'rsatish","Fikrni biryoqlama isbotlash","Muallifni rad etish","Matnni cho'zish"]},{"q":"Dalilning ishonchliligi nimaga bog'liq?","a":"Manbaning ishonchliligiga","o":["Manbaning ishonchliligiga","Matn hajmiga","Fikr uzunligiga","Rangli tasvirga"]},{"q":"Argumentda tahlilning roli qanday?","a":"Fikrni mantiqan asoslashda yordam beradi","o":["Fikrni mantiqan asoslashda yordam beradi","Fikrni qisqartiradi","Matnni soddalashtiradi","Tushuntirishni kamaytiradi"]},{"q":"Qarshi fikrni tahlil qilishdan maqsad:","a":"Ob'ektiv baho berish","o":["Ob'ektiv baho berish","Muallifni tanqid qilish","Fikrni o'zgartirish","Tavsiya yozish"]},{"q":"Argumentlar soni nechta bo'lishi kerak?","a":"Yetarli darajada, lekin ortiqcha bo'lmasligi kerak","o":["Yetarli darajada, lekin ortiqcha bo'lmasligi kerak","Qanchalik ko'p, shunchalik yaxshi","Hech biri kerak emas","Faqat bitta"]},{"q":"Kirish qismida iqtibos keltirish mumkinmi?","a":"Ha, mavzuni asoslash uchun","o":["Ha, mavzuni asoslash uchun","Yo'q, faqat asosiy qismda","Faqat xulosada","Annotatsiyada"]},{"q":"Asosiy qismda dalillar qanday tartibda beriladi?","a":"Muhimlik darajasiga ko'ra","o":["Muhimlik darajasiga ko'ra","Tasodifiy","Harflar tartibida","Xohlagancha"]},{"q":"Xulosa qismida tavsiyalar berish maqsadi:","a":"Keyingi tadqiqot yo'nalishlarini ko'rsatish","o":["Keyingi tadqiqot yo'nalishlarini ko'rsatish","Fikrni bezatish","Statistikani yashirish","Kirishdagi maqsadni o'zgartirish"]},{"q":"Ilmiy manba deganda nima tushuniladi?","a":"Ishonchli va tekshirilgan axborot manbasi","o":["Ishonchli va tekshirilgan axborot manbasi","Blog sahifasi","Shaxsiy fikr","Reklama maqolasi"]},{"q":"Birlamchi manba bu:","a":"Asl ilmiy tadqiqot yoki muallifning o'z ishi","o":["Asl ilmiy tadqiqot yoki muallifning o'z ishi","Tahliliy sharh","Internetdagi maqola","Lug'atdagi izoh"]},{"q":"Ikkilamchi manba deganda nimani tushunasiz?","a":"Asl manbaga berilgan sharh yoki tahlil","o":["Asl manbaga berilgan sharh yoki tahlil","Tajriba natijasi","Fikrni takrorlash","Jadval"]},{"q":"Manbalarni tanlashda eng muhim mezon:","a":"Ishonchlilik va dolzarblik","o":["Ishonchlilik va dolzarblik","Qisqalik","Rang-baranglik","Nashr joyi"]},{"q":"Ilmiy manbalarni izlash uchun ishlatiladigan usul:","a":"Kalit so'zlar orqali izlash","o":["Kalit so'zlar orqali izlash","Tasodifiy tanlash","Fikrni taxmin qilish","Fikrni o'zgartirish"]},{"q":"Akademik yozuvda qaysi holat xato hisoblanadi?","a":"Wikipediadan asosiy manba sifatida foydalanish","o":["Wikipediadan asosiy manba sifatida foydalanish","Manbani ko'rsatish","Parafrazlash","Tanqidiy tahlil"]},{"q":"Akademik yozuvda muvaffaqiyat kaliti nimalarda?","a":"Mantiq, dalil va tanqidiy fikrlash","o":["Mantiq, dalil va tanqidiy fikrlash","Tasodif va ijodkorlik","Ko'p matn yozish","Qiziqarli misollar"]},{"q":"Akademik matnning uch asosiy qismi qanday?","a":"Kirish, asosiy qism, xulosa","o":["Kirish, asosiy qism, xulosa","Annotatsiya, sarlavha, tavsiya","Rasm, jadval, diagramma","Fikr, misol, dalil"]},{"q":"Kirish qismida nimalar bayon etiladi?","a":"Mavzuning dolzarbligi, maqsad va vazifalar","o":["Mavzuning dolzarbligi, maqsad va vazifalar","Natijalar va xulosa","Tavsiyalar","Statistik ma'lumotlar"]},{"q":"Asosiy qismda nima yoziladi?","a":"Fikrni dalillar bilan asoslash","o":["Fikrni dalillar bilan asoslash","Xulosa takrori","Fikrni soddalashtirish","Kirishning davomi"]},{"q":"Xulosa qismi nima uchun zarur?","a":"Tahlilni to'xtatish","o":["Tahlilni to'xtatish","Kirishdagi fikrlarni takrorlash","yangi dalillar yaratish","Fikrni bezatish"]},{"q":"Paragraf deganda nima tushuniladi?","a":"Bitta asosiy fikrni o'z ichiga olgan matn bo'lagi","o":["Bitta asosiy fikrni o'z ichiga olgan matn bo'lagi","Jadval","Rasm","Diagramma"]}],
 };
 
-const SUBJS=[
-  {k:"falsafa",n:"Falsafa",              ic:"🧠",cl:"#9b7fe8",cnt:151},
-  {k:"at",     n:"Axborot Texnologiyalari",ic:"💻",cl:"#5b7fff",cnt:99},
-  {k:"iq",     n:"Iqtisodiyot Nazariyasi", ic:"📊",cl:"#1db954",cnt:100},
-  {k:"rt",     n:"Rus Tili (Akademik)",    ic:"📝",cl:"#e74c3c",cnt:147},
-  {k:"en",     n:"Ingliz Tili (YN-48)",    ic:"🇬🇧",cl:"#f0b429",cnt:147},
+/* ════════════════════════════════════════════════════════════
+   SUBJECTS
+   ════════════════════════════════════════════════════════════ */
+const SUBJS = [
+  {k:"falsafa", n:"Falsafa",                ic:"🧠", cl:"#a78bfa", cnt:151},
+  {k:"at",      n:"Axborot Texnologiyalari",ic:"💻", cl:"#5b7fff", cnt:99},
+  {k:"iq",      n:"Iqtisodiyot Nazariyasi", ic:"📊", cl:"#10b981", cnt:100},
+  {k:"rt",      n:"Rus Tili (Akademik)",    ic:"📝", cl:"#ef4444", cnt:147},
+  {k:"en",      n:"Ingliz Tili (YN-48)",    ic:"🇬🇧", cl:"#fbbf24", cnt:147},
+  {k:"ay",      n:"Akademik Yozuv",         ic:"✍️", cl:"#22d3ee", cnt:126},
 ];
 
-// ═══════ STATE ═══════
-let uName="",curSubj=null,curQs=[],done=0,right=0,studyAll=[],curFilt="all";
+/* ════════════════════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════════════════════ */
+let uName="", curSubj=null, curQs=[], done=0, right=0;
+let studyAll=[], curFilt="all";
+let wrongList=[]; // for review screen
 
-// ═══════ UTILS ═══════
-const shuffle=a=>{let b=[...a];for(let i=b.length-1;i>0;i--){let j=~~(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
-const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-const fbKey=n=>n.trim().replace(/[.#$\[\]\/\s]/g,"_").substring(0,40);
+/* ════════════════════════════════════════════════════════════
+   UTILS
+   ════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const shuffle = a => {
+  let b=[...a];
+  for(let i=b.length-1;i>0;i--){
+    let j=Math.floor(Math.random()*(i+1));
+    [b[i],b[j]]=[b[j],b[i]];
+  }
+  return b;
+};
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const fbKey = n => n.trim().replace(/[.#$\[\]\/\s]/g,"_").substring(0,40);
+
+/* ════════════════════════════════════════════════════════════
+   THEME (Light / Dark) — localStorage da saqlanadi
+   ════════════════════════════════════════════════════════════ */
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("th_theme", theme);
+  // meta theme-color ham yangilanadi (mobile brauzer header rangi)
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", theme==="light" ? "#f4f6fc" : "#06080f");
+}
+
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute("data-theme") || "dark";
+  applyTheme(cur === "dark" ? "light" : "dark");
+}
+
+// Boshlanishida: saqlangan theme yoki tizim sozlamasini tekshirish
+(function initTheme(){
+  const saved = localStorage.getItem("th_theme");
+  if(saved === "light" || saved === "dark"){
+    applyTheme(saved);
+  } else {
+    // Tizim sozlamasi (OS-level dark/light preference)
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(prefersDark ? "dark" : "light");
+  }
+})();
+
+/* ════════════════════════════════════════════════════════════
+   MOUSE-FOLLOW GRADIENT (faqat desktop)
+   ════════════════════════════════════════════════════════════ */
+if(window.matchMedia && !window.matchMedia("(max-width:768px)").matches){
+  let mx=50, my=50, tx=50, ty=50;
+  document.addEventListener("mousemove", e=>{
+    tx = (e.clientX / window.innerWidth) * 100;
+    ty = (e.clientY / window.innerHeight) * 100;
+  }, {passive:true});
+  // Smooth lerp animation
+  (function animate(){
+    mx += (tx - mx) * 0.08;
+    my += (ty - my) * 0.08;
+    document.documentElement.style.setProperty("--mx", mx + "%");
+    document.documentElement.style.setProperty("--my", my + "%");
+    requestAnimationFrame(animate);
+  })();
+}
 
 function go(id){
-  document.querySelectorAll(".scr").forEach(s=>s.classList.remove("on"));
-  const el=document.getElementById(id);
-  if(el){el.classList.add("on");window.scrollTo({top:0,behavior:"smooth"});}
+  document.querySelectorAll(".scr").forEach(s=>{
+    s.classList.remove("on");
+    s.classList.remove("entering");
+  });
+  const el=$(id);
+  if(el){
+    el.classList.add("on");
+    // Force reflow — bu animatsiya har safar to'g'ri restart bo'lishini ta'minlaydi
+    void el.offsetWidth;
+    el.classList.add("entering");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
 }
 
 let _tt;
-function toast(msg,ms=2600){
-  const el=document.getElementById("tst");
-  el.textContent=msg;el.classList.add("show");
-  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove("show"),ms);
+function toast(msg, ms=2600){
+  const el=$("tst");
+  el.textContent=msg;
+  el.classList.add("show");
+  clearTimeout(_tt);
+  _tt=setTimeout(()=>el.classList.remove("show"), ms);
 }
 
-// ═══════ FIREBASE CONFIG ═══════
-// ⚠️ Bu yerga o'z Firebase URL ingizni qo'ying
-// Firebase console → Realtime Database → URL ko'rinishi: https://LOYIHA-default-rtdb.firebaseio.com
+/* ── Custom modal (replaces window.confirm) ── */
+function showModal({icon="⚠️", title="Tasdiqlang", message="Davom etmoqchimisiz?", okText="Tasdiqlash", cancelText="Bekor qilish", onOk}){
+  $("m-ic").textContent=icon;
+  $("m-ttl").textContent=title;
+  $("m-msg").textContent=message;
+  $("m-yes").textContent=okText;
+  $("m-no").textContent=cancelText;
+  const bd=$("mbd");
+  bd.classList.add("on");
+  // Force reflow — modal animatsiyasi har safar to'g'ri ishlashi uchun
+  const modal=bd.querySelector(".modal");
+  if(modal){modal.style.animation="none"; void modal.offsetWidth; modal.style.animation="";}
+  const cleanup=()=>{
+    bd.classList.remove("on");
+    $("m-yes").onclick=null;
+    $("m-no").onclick=null;
+  };
+  $("m-yes").onclick=()=>{cleanup(); if(onOk) onOk();};
+  $("m-no").onclick=cleanup;
+}
+
+/* ── Animated number counter ── */
+function animateCount(el, target, ms=900){
+  const start=performance.now();
+  const from=parseInt(el.textContent.replace(/\D/g,""))||0;
+  const tick=now=>{
+    const t=Math.min(1,(now-start)/ms);
+    const eased=1-Math.pow(1-t,3); // easeOutCubic
+    const v=Math.round(from+(target-from)*eased);
+    el.textContent=v+(el.dataset.suffix||"");
+    if(t<1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ════════════════════════════════════════════════════════════
+   🔥 FIREBASE CONFIG — REYTING UCHUN
+   ════════════════════════════════════════════════════════════
+   ⚠️ MUHIM: Firebase URL ni o'zgartirish uchun:
+   1. https://console.firebase.google.com saytiga kiring
+   2. Loyihangizni tanlang (yoki yangi yarating)
+   3. Chap menyudan "Realtime Database" ni tanlang
+   4. URL ko'rinishi: https://LOYIHA-NOMI-default-rtdb.firebaseio.com
+   5. Quyidagi qatordagi URL ni o'zgartiring (oxirida "/" YO'Q):
+   ════════════════════════════════════════════════════════════ */
 const FB_URL = "https://testhub-1ef80-default-rtdb.firebaseio.com";
 
-// ═══════ LOCALSTORAGE (asosiy saqlash) ═══════
+/* ════════════════════════════════════════════════════════════
+   LOCALSTORAGE
+   ════════════════════════════════════════════════════════════ */
 function lsGet(){try{return JSON.parse(localStorage.getItem("th_scores")||"{}");}catch{return{};}}
-function lsSave(d){try{localStorage.setItem("th_scores",JSON.stringify(d));}catch{}}
-function lsGetMe(){const d=lsGet();return d[uName]||{name:uName,scores:{}};}
+function lsSave(d){try{localStorage.setItem("th_scores", JSON.stringify(d));}catch{}}
+function lsGetMe(){const d=lsGet(); return d[uName]||{name:uName, scores:{}};}
 
-// ═══════ AUTO-LOGIN ═══════
-window.addEventListener("load",()=>{
+/* ── Streak tracking ── */
+function getStreak(){
+  try{return JSON.parse(localStorage.getItem("th_streak")||'{"days":0,"last":null}');}catch{return{days:0,last:null};}
+}
+function updateStreak(){
+  const s=getStreak();
+  const today=new Date().toDateString();
+  const yest=new Date(Date.now()-86400000).toDateString();
+  if(s.last===today){return s;}
+  if(s.last===yest){s.days+=1;}
+  else{s.days=1;}
+  s.last=today;
+  localStorage.setItem("th_streak", JSON.stringify(s));
+  return s;
+}
+function renderStreak(){
+  const s=getStreak();
+  if(s.days>0){
+    $("streak-val").textContent=s.days;
+    $("streak-chip").style.display="inline-flex";
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   AUTO-LOGIN + INIT
+   ════════════════════════════════════════════════════════════ */
+window.addEventListener("load", ()=>{
   buildGrids();
   const saved=localStorage.getItem("th_name");
-  if(saved&&saved.length>=2){uName=saved;initHome();go("s-home");}
-  // else s-name already has class "on"
+  if(saved && saved.length>=2){
+    uName=saved;
+    initHome();
+    go("s-home");
+  }
 });
 
-// ═══════ AUTH ═══════
-document.getElementById("ni").addEventListener("keydown",e=>{if(e.key==="Enter")doEnter();});
+/* ════════════════════════════════════════════════════════════
+   AUTH
+   ════════════════════════════════════════════════════════════ */
+$("ni").addEventListener("keydown", e=>{if(e.key==="Enter") doEnter();});
 
 function doEnter(){
-  const v=document.getElementById("ni").value.trim();
-  if(!v||v.length<2){toast("❗ Kamida 2 ta harf kiriting");return;}
+  const v=$("ni").value.trim();
+  if(!v || v.length<2){toast("❗ Kamida 2 ta harf kiriting"); return;}
   uName=v;
-  localStorage.setItem("th_name",v);
-  initHome();go("s-home");
+  localStorage.setItem("th_name", v);
+  initHome();
+  go("s-home");
 }
 
 function initHome(){
-  document.getElementById("ua").textContent=uName[0].toUpperCase();
-  document.getElementById("unh").textContent=uName;
+  $("ua").textContent=uName[0].toUpperCase();
+  $("unh").textContent=uName;
+  updateStreak();
+  renderStreak();
   loadBests();
 }
 
 function logout(){
   uName="";
   localStorage.removeItem("th_name");
-  document.getElementById("ni").value="";
+  $("ni").value="";
   go("s-name");
 }
 
-function openLBguest(){document.getElementById("lb-back").onclick=()=>go("s-name");curFilt="all";go("s-lb");renderLB();}
-function openLBlogged(){document.getElementById("lb-back").onclick=()=>go(uName?"s-home":"s-name");curFilt="all";go("s-lb");renderLB();}
+function openLBguest(){
+  $("lb-back").onclick=()=>go("s-name");
+  curFilt="all";
+  go("s-lb");
+  renderLB();
+}
+function openLBlogged(){
+  $("lb-back").onclick=()=>go(uName?"s-home":"s-name");
+  curFilt="all";
+  go("s-lb");
+  renderLB();
+}
 
-// ═══════ GRIDS ═══════
+/* ════════════════════════════════════════════════════════════
+   SUBJECT GRIDS
+   ════════════════════════════════════════════════════════════ */
 function buildGrids(){
-  document.getElementById("sg-test").innerHTML=SUBJS.map((s,i)=>`
+  $("sg-test").innerHTML=SUBJS.map((s,i)=>`
     <div class="scard" onclick="startTest('${s.k}')"
-      style="background:linear-gradient(135deg,${s.cl}18,${s.cl}08);border:1.5px solid ${s.cl}30;animation-delay:${i*.07}s">
+      style="--scc:${s.cl}26;border:1.5px solid ${s.cl}40;animation-delay:${i*.06}s">
       <span class="scard-ic">${s.ic}</span>
       <div class="scard-n">${s.n}</div>
-      <div class="scard-i">${s.cnt} ta savol · har safar 25 ta</div>
+      <div class="scard-i">${s.cnt} ta savol · 25 ta tasodifiy</div>
       <div class="scard-best" id="best-${s.k}" style="display:none"></div>
     </div>`).join("");
 
-  document.getElementById("sg-study").innerHTML=SUBJS.map((s,i)=>`
+  $("sg-study").innerHTML=SUBJS.map((s,i)=>`
     <div class="scard" onclick="openStudy('${s.k}')"
-      style="background:linear-gradient(135deg,${s.cl}18,${s.cl}08);border:1.5px solid ${s.cl}30;animation-delay:${i*.07}s">
+      style="--scc:${s.cl}26;border:1.5px solid ${s.cl}40;animation-delay:${i*.06}s">
       <span class="scard-ic">${s.ic}</span>
       <div class="scard-n">${s.n}</div>
-      <div class="scard-i">${s.cnt} ta savol · to\'g\'ri javoblar bilan</div>
+      <div class="scard-i">${s.cnt} ta savol · javoblar bilan</div>
     </div>`).join("");
 }
 
@@ -1223,32 +2886,50 @@ function loadBests(){
   const me=lsGetMe();
   SUBJS.forEach(s=>{
     const sc=me.scores?.[s.k];
-    const el=document.getElementById("best-"+s.k);
-    if(el&&sc){el.textContent="✓ "+sc.pct+"%";el.style.display="block";}
+    const el=$("best-"+s.k);
+    if(el && sc){el.textContent="✓ "+sc.pct+"%"; el.style.display="block";}
+    else if(el){el.style.display="none";}
   });
 }
 
-// ═══════ TEST ═══════
+/* ════════════════════════════════════════════════════════════
+   TEST
+   ════════════════════════════════════════════════════════════ */
 function startTest(key){
   curSubj=SUBJS.find(s=>s.k===key);
-  done=0;right=0;
+  done=0; right=0;
+  wrongList=[];
   curQs=shuffle(BANKS[key]).slice(0,25);
-  document.getElementById("tsl").textContent=curSubj.ic+" "+curSubj.n;
-  updProg();buildQs();go("s-test");
+  $("tsl").textContent=curSubj.ic+" "+curSubj.n;
+  updProg();
+  buildQs();
+  go("s-test");
 }
-function restart(){if(curSubj)startTest(curSubj.k);}
+
+function restart(){if(curSubj) startTest(curSubj.k);}
+
 function confirmBack(){
-  if(done>0&&done<25&&!confirm("Test tugallanmagan. Chiqib ketasizmi?"))return;
-  go("s-subj-test");
+  if(done>0 && done<25){
+    showModal({
+      icon:"⚠️",
+      title:"Testdan chiqasizmi?",
+      message:"Test hali tugatilmagan ("+done+"/25). Natija saqlanmaydi.",
+      okText:"Ha, chiqaman",
+      cancelText:"Davom etish",
+      onOk:()=>go("s-subj-test"),
+    });
+  } else {
+    go("s-subj-test");
+  }
 }
 
 function buildQs(){
-  const c=document.getElementById("qc");c.innerHTML="";
+  const c=$("qc"); c.innerHTML="";
   curQs.forEach((q,qi)=>{
     const opts=shuffle(q.o);
     const d=document.createElement("div");
-    d.className="qcard anim-in";d.id="c"+qi;
-    d.style.animationDelay=(qi*.03)+"s";
+    d.className="qcard"; d.id="c"+qi;
+    d.style.animationDelay=Math.min(qi*.03,.5)+"s";
     d.innerHTML=`<div class="qtop">
       <span class="qnum">Q${String(qi+1).padStart(2,"0")}</span>
       <span class="qtxt">${esc(q.q)}</span></div>
@@ -1260,219 +2941,372 @@ function buildQs(){
   });
 }
 
-function pick(qi,btn){
-  const q=curQs[qi],card=document.getElementById("c"+qi);
-  if(card.dataset.done)return;
+function pick(qi, btn){
+  const q=curQs[qi], card=$("c"+qi);
+  if(card.dataset.done) return;
   card.dataset.done="1";
   const chosen=btn.dataset.v;
   card.querySelectorAll(".ob").forEach(b=>{
     b.disabled=true;
-    if(b.dataset.v===q.a)b.classList.add("ok");
+    if(b.dataset.v===q.a) b.classList.add("ok");
   });
-  if(chosen===q.a){btn.classList.add("ok");right++;}
-  else btn.classList.add("no");
-  done++;updProg();
-  if(done===25)setTimeout(showScore,700);
+  if(chosen===q.a){
+    btn.classList.add("ok");
+    right++;
+    // Engil vibratsiya (to'g'ri javob)
+    if(navigator.vibrate) try{navigator.vibrate(30);}catch(e){}
+  } else {
+    btn.classList.add("no");
+    wrongList.push({q:q.q, your:chosen, correct:q.a, idx:qi+1});
+    // Xato javob: kuchliroq vibratsiya — qo'sh tebranish
+    if(navigator.vibrate) try{navigator.vibrate([60,40,90]);}catch(e){}
+  }
+  done++;
+  updProg();
+  if(done===25) setTimeout(showScore, 750);
 }
 
 function updProg(){
   const p=Math.round(done/25*100);
-  document.getElementById("pf").style.width=p+"%";
-  document.getElementById("pt").textContent=done+" / 25";
-  document.getElementById("pp").textContent=p+"%";
+  $("pf").style.width=p+"%";
+  $("pt").textContent=done+" / 25";
+  $("pp").textContent=p+"%";
 }
 
-// ═══════ SCORE ═══════
+/* ════════════════════════════════════════════════════════════
+   SCORE
+   ════════════════════════════════════════════════════════════ */
 function showScore(){
   const pct=Math.round(right/25*100);
-  document.getElementById("sr").style.setProperty("--deg",Math.round(pct/100*360)+"deg");
-  document.getElementById("sn").textContent=pct+"%";
-  document.getElementById("sc2").textContent=right;
-  document.getElementById("sw").textContent=25-right;
-  let em,ti,ms;
-  if(pct>=90){em="🏆";ti="Ajoyib natija!";ms="Zo'q! Bu fanni mukammal bilasiz!";}
-  else if(pct>=75){em="🌟";ti="Zo'q!";ms="Juda yaxshi! Shunday davom eting!";}
-  else if(pct>=60){em="👍";ti="Yaxshi!";ms="Yaxshi natija. Ba'zi mavzularni takrorlang.";}
-  else if(pct>=40){em="📚";ti="Ko'proq o'qing!";ms="Yana mashq kerak. Berilmang!";}
-  else{em="💪";ti="Qayta urinib ko'ring!";ms="O'rganish bo'limidan foydalaning!";}
-  document.getElementById("se").textContent=em;
-  document.getElementById("st").textContent=ti;
-  document.getElementById("sm").textContent=ms;
-  if(pct>=90)confetti();
-  saveScore(curSubj.k,right,pct);
+
+  // Ring animation
+  const circ=2*Math.PI*70; // 440
+  const offset=circ - (pct/100)*circ;
+  setTimeout(()=>{$("r-fg").style.strokeDashoffset=offset;}, 100);
+
+  // Animated counters
+  $("sn").textContent="0%";
+  $("sc2").textContent="0";
+  $("sw").textContent="0";
+  setTimeout(()=>{
+    const snEl=$("sn"); snEl.dataset.suffix="%";
+    animateCount(snEl, pct, 1100);
+    animateCount($("sc2"), right, 900);
+    animateCount($("sw"), 25-right, 900);
+  }, 200);
+
+  let em, ti, ms;
+  if(pct>=90){em="🏆"; ti="Ajoyib natija!"; ms="Zo'r! Bu fanni mukammal bilasiz!";}
+  else if(pct>=75){em="🌟"; ti="Zo'r!"; ms="Juda yaxshi! Shunday davom eting!";}
+  else if(pct>=60){em="👍"; ti="Yaxshi!"; ms="Yaxshi natija. Ba'zi mavzularni takrorlang.";}
+  else if(pct>=40){em="📚"; ti="Ko'proq o'qing!"; ms="Yana mashq kerak. Berilmang!";}
+  else{em="💪"; ti="Qayta urinib ko'ring!"; ms="O'rganish bo'limidan foydalaning!";}
+
+  $("se").textContent=em;
+  $("st").textContent=ti;
+  $("sm").textContent=ms;
+
+  // Show review button only if there are wrong answers
+  $("rv-btn").style.display = wrongList.length>0 ? "inline-flex" : "none";
+
+  if(pct>=90) confetti();
+  saveScore(curSubj.k, right, pct);
   go("s-score");
 }
 
-// ═══════ SAVE SCORE ═══════
-function saveScore(subKey,correct,pct){
-  const d=lsGet();
-  if(!d[uName])d[uName]={name:uName,scores:{}};
-  const prev=d[uName].scores[subKey];
-  if(!prev||pct>=prev.pct){
-    d[uName].scores[subKey]={correct,pct,ts:Date.now()};
-    lsSave(d);
-    toast("✅ Natija saqlandi: "+pct+"%");
-  } else {
-    toast("ℹ️ Oldingi natijangiz yaxshiroq: "+prev.pct+"%");
-  }
-  // Firebase ga saqlash (hamma ko'rishi uchun)
-  const userKey=fbKey(uName);
-  const scorePayload={};
-  scorePayload[subKey]={correct,pct};
-  fetch(`${FB_URL}/scores/${userKey}/scores.json`,{
-    method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(scorePayload)
-  }).then(()=>fetch(`${FB_URL}/scores/${userKey}/name.json`,{
-    method:'PUT',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(uName)
-  })).catch(()=>{});
-  loadBests();
+/* ════════════════════════════════════════════════════════════
+   REVIEW (wrong answers)
+   ════════════════════════════════════════════════════════════ */
+function openReview(){
+  $("rv-sub").textContent = curSubj.ic+" "+curSubj.n+" · "+wrongList.length+" ta xato javob";
+  $("rv-list").innerHTML = wrongList.map((w,i)=>`
+    <div class="rv-card" style="animation:cardIn .35s var(--ease-out) ${Math.min(i*.04,.4)}s both;">
+      <div class="rv-q"><b style="color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-right:.4rem;">Q${w.idx}.</b>${esc(w.q)}</div>
+      <div class="rv-row"><span class="rv-lbl">Siz:</span><span class="rv-bad">${esc(w.your)}</span></div>
+      <div class="rv-row"><span class="rv-lbl">To'g'ri:</span><span class="rv-good">${esc(w.correct)}</span></div>
+    </div>`).join("");
+  go("s-review");
 }
 
-// ═══════ STUDY ═══════
+/* ════════════════════════════════════════════════════════════
+   SAVE SCORE
+   ════════════════════════════════════════════════════════════ */
+function saveScore(subKey, correct, pct){
+  const d=lsGet();
+  if(!d[uName]) d[uName]={name:uName, scores:{}};
+  const prev=d[uName].scores[subKey];
+  // Keep best score
+  if(!prev || pct>=prev.pct){
+    d[uName].scores[subKey]={correct, pct};
+  }
+  lsSave(d);
+  loadBests();
+
+  // Save to Firebase (best score only)
+  const userKey=fbKey(uName);
+  const scorePayload={};
+  scorePayload[subKey]={correct, pct};
+  fetch(`${FB_URL}/scores/${userKey}/scores.json`,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(scorePayload)
+  }).then(()=>fetch(`${FB_URL}/scores/${userKey}/name.json`,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(uName)
+  })).catch(()=>{});
+}
+
+/* ════════════════════════════════════════════════════════════
+   STUDY
+   ════════════════════════════════════════════════════════════ */
 function openStudy(key){
   const s=SUBJS.find(x=>x.k===key);
   studyAll=[...BANKS[key]];
-  document.getElementById("sv-ttl").textContent=s.ic+" "+s.n;
-  document.getElementById("sv-sts").textContent=studyAll.length+" ta savol";
-  document.getElementById("sv-tb").onclick=()=>startTest(key);
-  document.getElementById("sv-srch").value="";
+  $("sv-ttl").textContent=s.ic+" "+s.n;
+  $("sv-sts").textContent=studyAll.length+" ta savol · javoblar yashil rangda";
+  $("sv-tb").onclick=()=>startTest(key);
+  $("sv-srch").value="";
   renderStudy(studyAll);
   go("s-study-view");
 }
 
 function renderStudy(arr){
-  document.getElementById("sv-cnt").textContent=arr.length+" / "+studyAll.length+" ta ko'rsatilmoqda";
+  $("sv-cnt").textContent=arr.length+" / "+studyAll.length+" ta ko'rsatilmoqda";
   if(!arr.length){
-    document.getElementById("sv-list").innerHTML=`<div style="text-align:center;padding:2.5rem;color:var(--mute)">🔍 Hech narsa topilmadi</div>`;
+    $("sv-list").innerHTML=`<div style="text-align:center;padding:3rem 1rem;color:var(--mute)"><div style="font-size:2.5rem;margin-bottom:.5rem;opacity:.5;">🔍</div>Hech narsa topilmadi</div>`;
     return;
   }
-  document.getElementById("sv-list").innerHTML=arr.map((q,i)=>`
-    <div class="qv-card anim-in" style="animation-delay:${Math.min(i*.015,.4)}s">
+  $("sv-list").innerHTML=arr.map((q,i)=>{
+    // O'rganish bo'limida to'g'ri javob har doim 1-o'rinda turadi
+    const ordered = [q.a, ...q.o.filter(o => o !== q.a)];
+    return `
+    <div class="qv-card" style="animation:qIn .4s var(--ease-out) ${Math.min(i*.012,.4)}s both;">
       <div class="qv-num">Savol ${i+1}</div>
       <div class="qv-q">${esc(q.q)}</div>
       <div class="qv-opts">
-        ${q.o.map(o=>`<span class="qv-opt${o===q.a?" cor":""}">${esc(o)}</span>`).join("")}
+        ${ordered.map(o=>`<span class="qv-opt${o===q.a?" cor":""}">${esc(o)}</span>`).join("")}
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
 
 function filterStudy(){
-  const q=document.getElementById("sv-srch").value.toLowerCase().trim();
-  if(!q){renderStudy(studyAll);return;}
-  renderStudy(studyAll.filter(item=>item.q.toLowerCase().includes(q)||item.a.toLowerCase().includes(q)));
+  const q=$("sv-srch").value.toLowerCase().trim();
+  if(!q){renderStudy(studyAll); return;}
+  renderStudy(studyAll.filter(item =>
+    item.q.toLowerCase().includes(q) || item.a.toLowerCase().includes(q)
+  ));
 }
 
-// ═══════ LEADERBOARD ═══════
+/* ════════════════════════════════════════════════════════════
+   LEADERBOARD
+   ════════════════════════════════════════════════════════════ */
 function buildFilters(){
-  const all=[{k:"all",n:"Barchasi"},...SUBJS.map(s=>({k:s.k,n:s.ic+" "+s.n}))];
-  document.getElementById("fr").innerHTML=all.map(f=>
-    `<button class="fb${curFilt===f.k?" on":""}" onclick="setFilt('${f.k}')">${f.n}</button>`).join("");
+  const all=[{k:"all", n:"Barchasi"}, ...SUBJS.map(s=>({k:s.k, n:s.ic+" "+s.n}))];
+  $("fr").innerHTML=all.map(f =>
+    `<button class="fb${curFilt===f.k?" on":""}" onclick="setFilt('${f.k}')">${f.n}</button>`
+  ).join("");
 }
-function setFilt(k){curFilt=k;renderLB();}
+
+function setFilt(k){curFilt=k; renderLB();}
 
 function _buildLBHtml(allData){
-  const lt=document.getElementById("lt");
+  const lt=$("lt");
+  const podEl=$("podium");
   const all=Object.values(allData);
   if(!all.length){
-    lt.innerHTML='<div class="lb-empty">🧐 Hali hech kim test ishlamagan.<br>Birinchi bo\'ling!</div>';
-    document.getElementById("lb-sync").textContent="Ma'lumot yo'q";
+    lt.innerHTML='<div class="lb-empty"><div class="lb-empty-ic">🧐</div>Hali hech kim test ishlamagan.<br>Birinchi bo\'ling!</div>';
+    podEl.style.display="none";
+    $("lb-sync").textContent="Ma'lumot yo'q";
     return;
   }
   let rows=all.map(u=>{
     const sc=u.scores||{};
-    const details=SUBJS.map(s=>({...s,pct:sc[s.k]?.pct??null,cor:sc[s.k]?.correct??null}));
-    let avg=0,cnt=0;
-    if(curFilt==="all"){details.forEach(d=>{if(d.pct!==null){avg+=d.pct;cnt++;}});avg=cnt?Math.round(avg/cnt):0;}
-    else avg=sc[curFilt]?.pct??0;
-    return {name:u.name||"?",avg,details,sc};
+    const details=SUBJS.map(s=>({...s, pct:sc[s.k]?.pct??null, cor:sc[s.k]?.correct??null}));
+    let avg=0, displayPct=0, sumPct=0, completedCnt=0;
+    details.forEach(d=>{if(d.pct!==null){sumPct+=d.pct; completedCnt++;}});
+
+    if(curFilt==="all"){
+      // ⚖️ HALOL ALGORITM: barcha fanlardan o'rtacha (tugatilmagan fan = 0%)
+      // Bu shuni anglatadi: 4 fan 100% > 1 fan 100%
+      // Misol: 4/6 fan 100% → 400/6 = 67%
+      //        1/6 fan 100% → 100/6 = 17%
+      avg = Math.round(sumPct / SUBJS.length);
+      // Ko'rsatish uchun: tugatilgan fanlardan o'rtacha (foydalanuvchiga tushunarli)
+      displayPct = completedCnt ? Math.round(sumPct / completedCnt) : 0;
+    } else {
+      avg = sc[curFilt]?.pct ?? 0;
+      displayPct = avg;
+    }
+    return {name:u.name||"?", avg, displayPct, completedCnt, details, sc};
   });
-  rows.sort((a,b)=>b.avg-a.avg||Object.keys(b.sc).length-Object.keys(a.sc).length||a.name.localeCompare(b.name));
-  if(curFilt!=="all")rows=rows.filter(r=>r.avg>0);
-  if(!rows.length){lt.innerHTML='<div class="lb-empty">Bu fanda hali natija yo\'q.</div>';return;}
+  // Saralash: avval umumiy ball (avg), keyin tugatilgan fanlar soni, keyin ism
+  rows.sort((a,b)=> b.avg-a.avg || b.completedCnt-a.completedCnt || a.name.localeCompare(b.name));
+  if(curFilt!=="all") rows=rows.filter(r=>r.avg>0);
+  else rows=rows.filter(r=>r.completedCnt>0); // Hech fan ishlamaganlarni ko'rsatmaymiz
+
+  if(!rows.length){
+    lt.innerHTML='<div class="lb-empty"><div class="lb-empty-ic">📭</div>Bu fanda hali natija yo\'q.</div>';
+    podEl.style.display="none";
+    return;
+  }
+
+  // PODIUM (top 3)
+  if(rows.length>=1){
+    const p1=rows[0], p2=rows[1], p3=rows[2];
+    const buildPod=(u,rank)=>{
+      if(!u) return '<div class="pod" style="visibility:hidden;"></div>';
+      const init=(u.name||"?")[0].toUpperCase();
+      const tag = curFilt==="all"
+        ? (u.completedCnt+"/"+SUBJS.length+" fan · "+u.displayPct+"% o'rt.")
+        : "Eng yaxshi";
+      return `<div class="pod p${rank}">
+        <div class="pod-medal">${rank===1?"🥇":rank===2?"🥈":"🥉"}</div>
+        <div class="pod-av">${esc(init)}</div>
+        <div class="pod-name">${esc(u.name)}</div>
+        <div class="pod-pct">${u.avg}%</div>
+        <div class="pod-tag">${tag}</div>
+      </div>`;
+    };
+    // Order: 2nd, 1st, 3rd (visual podium)
+    podEl.innerHTML = buildPod(p2,2) + buildPod(p1,1) + buildPod(p3,3);
+    podEl.style.display="grid";
+  } else {
+    podEl.style.display="none";
+  }
+
+  // Table
   let html=`<div class="lbr hdr">
     <div>#</div><div>Ism</div>
-    <div style="text-align:center">Foiz</div>
-    <div style="text-align:center">Ball</div>
+    <div style="text-align:center">Umumiy</div>
+    <div style="text-align:center">Fanlar</div>
   </div>`;
   rows.forEach((u,i)=>{
-    const ri=i===0?"🥇":i===1?"🥈":i===2?"🥉":i+1;
-    const rc=i===0?"g":i===1?"si":i===2?"br":"";
-    const me=uName&&u.name===uName;
-    const ball=curFilt==="all"?(Object.keys(u.sc).length+"/"+SUBJS.length):(u.sc[curFilt]?(u.sc[curFilt].correct+"/25"):"-");
-    const dots=u.details.map(d=>`<div class="ldot" style="background:${d.pct===null?"var(--brd)":d.pct>=80?"var(--grn)":d.pct>=50?"var(--gold)":"var(--red)"}" title="${d.n}: ${d.pct!==null?d.pct+"%":"—"}"></div>`).join("");
-    const pc_col=u.avg>=80?"var(--grn)":u.avg>=50?"var(--gold)":"var(--red)";
+    const ri = i<3 ? (i===0?"🥇":i===1?"🥈":"🥉") : (i+1);
+    const me = uName && u.name===uName;
+    const ball = curFilt==="all"
+      ? (u.completedCnt+"/"+SUBJS.length)
+      : (u.sc[curFilt]?(u.sc[curFilt].correct+"/25"):"-");
+    const dots = u.details.map(d=>{
+      const col = d.pct===null?"var(--brd)":d.pct>=80?"var(--grn)":d.pct>=50?"var(--gold)":"var(--red)";
+      return `<div class="ldot" style="background:${col}" title="${d.n}: ${d.pct!==null?d.pct+'%':'—'}"></div>`;
+    }).join("");
+    const pc_col = u.avg>=80?"var(--grn)":u.avg>=50?"var(--gold)":"var(--red)";
     html+=`
       <div class="lbr${me?" me":""}" onclick="togDet('ld${i}')">
-        <div class="rk ${rc}">${ri}</div>
-        <div><div class="lbname">${esc(u.name)}${me?" 👤":""}</div><div class="ldots">${dots}</div></div>
+        <div class="rk">${ri}</div>
+        <div>
+          <div class="lbname">${esc(u.name)}${me?'<span class="lbme">SIZ</span>':""}</div>
+          <div class="ldots">${dots}</div>
+        </div>
         <div>
           <div class="pval" style="color:${pc_col}">${u.avg}%</div>
-          <div class="pbar" style="width:${u.avg}%;max-width:52px;"></div>
+          <div class="pbar" style="width:${u.avg}%;"></div>
         </div>
-        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:.72rem;color:var(--mute)">${ball}</div>
+        <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--mute)">${ball}</div>
       </div>
       <div class="ldet" id="ld${i}">
-        ${u.details.map(d=>{const s=u.sc[d.k];const col=!s?"var(--mute)":s.pct>=80?"var(--grn)":s.pct>=50?"var(--gold)":"var(--red)";
-          return `<div class="ldr"><span>${d.ic} ${d.n}</span><span style="font-weight:700;color:${col}">${s?s.pct+"% ("+s.cor+"/25)":"—"}</span></div>`;}).join("")}
+        ${u.details.map(d=>{
+          const s=u.sc[d.k];
+          const col=!s?"var(--mute)":s.pct>=80?"var(--grn)":s.pct>=50?"var(--gold)":"var(--red)";
+          return `<div class="ldr"><span>${d.ic} ${d.n}</span><span style="font-weight:700;color:${col}">${s?s.pct+"% ("+s.cor+"/25)":"—"}</span></div>`;
+        }).join("")}
       </div>`;
   });
   lt.innerHTML=html;
 }
 
 function renderLB(){
-  const lt=document.getElementById("lt");
-  lt.innerHTML='<div style="padding:2rem;text-align:center;color:var(--mute);font-size:.88rem">⏳ Yuklanmoqda...</div>';
+  const lt=$("lt");
+  lt.innerHTML='<div style="padding:2.4rem;text-align:center;color:var(--mute);font-size:.9rem;"><div style="font-size:1.6rem;margin-bottom:.4rem;opacity:.6;">⏳</div>Yuklanmoqda...</div>';
+  $("podium").style.display="none";
   buildFilters();
   fetch(`${FB_URL}/scores.json`)
     .then(r=>r.json())
     .then(data=>{
-      document.getElementById("lb-sync").textContent="Barcha foydalanuvchilar natijalari";
+      $("lb-sync").textContent="Barcha foydalanuvchilar natijalari";
       _buildLBHtml(data||{});
     })
     .catch(()=>{
-      document.getElementById("lb-sync").textContent="Qurilmadagi natijalar (offline)";
+      $("lb-sync").textContent="Qurilmadagi natijalar (offline)";
       _buildLBHtml(lsGet());
     });
 }
-function togDet(id){const el=document.getElementById(id);if(el)el.classList.toggle("open");}
 
-// ═══════ PARTICLES ═══════
+function togDet(id){
+  const el=$(id);
+  if(el) el.classList.toggle("open");
+}
+
+/* ════════════════════════════════════════════════════════════
+   PARTICLES (subtle, theme-aware)
+   ════════════════════════════════════════════════════════════ */
 (()=>{
-  const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
-  let W,H,pts=[];
-  const resize=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight;};
-  resize();addEventListener("resize",resize);
-  for(let i=0;i<45;i++)pts.push({x:Math.random()*3000,y:Math.random()*2000,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.2+.3});
+  const cv=$("cv"), ctx=cv.getContext("2d");
+  let W,H, pts=[];
+  const resize=()=>{W=cv.width=innerWidth; H=cv.height=innerHeight;};
+  resize();
+  addEventListener("resize", resize);
+  const N = innerWidth<600 ? 28 : 50;
+  for(let i=0;i<N;i++){
+    pts.push({
+      x:Math.random()*innerWidth,
+      y:Math.random()*innerHeight,
+      vx:(Math.random()-.5)*.16,
+      vy:(Math.random()-.5)*.16,
+      r:Math.random()*1.3+.3,
+      a:Math.random()*.3+.1
+    });
+  }
   const draw=()=>{
     ctx.clearRect(0,0,W,H);
+    // Light themada to'qroq, dark da yorqinroq
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    const baseColor = isLight ? "76,110,240" : "91,127,255";
     pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle="rgba(91,127,255,.18)";ctx.fill();
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${baseColor},${p.a})`;
+      ctx.fill();
     });
     requestAnimationFrame(draw);
   };
   draw();
 })();
 
-// ═══════ CONFETTI ═══════
+/* ════════════════════════════════════════════════════════════
+   CONFETTI
+   ════════════════════════════════════════════════════════════ */
 function confetti(){
-  const cls=["#5b7fff","#f0b429","#1db954","#9b7fe8","#e74c3c","#f472b6"];
-  for(let i=0;i<80;i++){
+  const cls=["#5b7fff","#fbbf24","#10b981","#a78bfa","#ef4444","#f472b6","#22d3ee"];
+  const N = innerWidth<600 ? 50 : 70;
+  for(let i=0;i<N;i++){
     const d=document.createElement("div");
     d.className="cf";
-    const sz=5+Math.random()*9;
-    d.style.cssText=`left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;
+    const sz=5+Math.random()*10;
+    d.style.cssText=`left:${Math.random()*100}vw;top:-15px;width:${sz}px;height:${sz}px;
       border-radius:${Math.random()>.5?"50%":"3px"};
-      background:${cls[~~(Math.random()*cls.length)]};
-      animation-delay:${Math.random()*1.3}s;
-      animation-duration:${1.8+Math.random()*1.5}s;`;
+      background:${cls[Math.floor(Math.random()*cls.length)]};
+      animation-delay:${Math.random()*1.2}s;
+      animation-duration:${2+Math.random()*1.4}s;`;
     document.body.appendChild(d);
-    setTimeout(()=>d.remove(),3800);
+    setTimeout(()=>d.remove(), 4200);
   }
 }
+
+/* ════════════════════════════════════════════════════════════
+   MODAL: close on backdrop click / Esc
+   ════════════════════════════════════════════════════════════ */
+$("mbd").addEventListener("click", e=>{
+  if(e.target.id==="mbd") $("m-no").click();
+});
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && $("mbd").classList.contains("on")) $("m-no").click();
+});
 </script>
 </body>
 </html>
