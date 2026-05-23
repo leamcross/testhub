@@ -3310,19 +3310,32 @@ document.addEventListener("keydown", e=>{
   if(e.key==="Escape" && $("mbd").classList.contains("on")) $("m-no").click();
 });
 </script>
-  <!-- ════════════════════════════════════════
-     VISITOR TRACKING (Firebase Realtime DB)
-     ════════════════════════════════════════ -->
+
+<!-- ════════════════════════════════════════════════════════════
+     👁️  VISITOR TRACKING — har bir tashrifchini Firebase'ga yozadi
+     ════════════════════════════════════════════════════════════ -->
 <script>
 (async function trackVisitor(){
   try {
-    // Faqat bir marta sessiya davomida log yozish
+    // Bir sessiya davomida faqat 1 marta yozish
     if (sessionStorage.getItem('th_logged')) return;
 
-    // 1) IP va geolocation (bepul, ro'yxat shart emas)
+    // 1) IP va geolocation olish (ipapi.co bepul, ro'yxat shart emas)
     const geo = await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({}));
 
-    // 2) Brauzer va OS aniqlash
+    // 2) Bloklangan IP'mi tekshirish
+    if (geo.ip) {
+      const ipKey = geo.ip.replace(/\./g,'_').replace(/:/g,'-');
+      try {
+        const blockedRes = await fetch(FB_URL + '/blocked/' + ipKey + '.json').then(r=>r.json());
+        if (blockedRes) {
+          document.body.innerHTML = '<div style="display:flex;height:100vh;align-items:center;justify-content:center;font-family:sans-serif;font-size:18px;color:#999;background:#0a0d18;text-align:center;padding:20px">Ushbu IP saytdan foydalanish huquqidan mahrum etilgan.<br>Bog\'lanish uchun: TestHub admin</div>';
+          return;
+        }
+      } catch(e) {}
+    }
+
+    // 3) Brauzer aniqlash
     const ua = navigator.userAgent;
     const browser =
       /Edg\//.test(ua) ? 'Edge' :
@@ -3332,6 +3345,7 @@ document.addEventListener("keydown", e=>{
       /Safari\//.test(ua) && !/Chrome/.test(ua) ? 'Safari' :
       'Other';
 
+    // 4) OS aniqlash
     const os =
       /Windows NT 10/.test(ua) ? 'Windows 10/11' :
       /Windows/.test(ua) ? 'Windows' :
@@ -3341,41 +3355,41 @@ document.addEventListener("keydown", e=>{
       /Linux/.test(ua) ? 'Linux' :
       'Other';
 
-    // 3) Mobil/desktop emoji
+    // 5) Mobil/desktop
     const isMobile = /Mobi|Android|iPhone|iPad/.test(ua);
     const type = isMobile ? '📱' : '💻';
 
-    // 4) Foydalanuvchi ismi (agar saytda kiritgan bo'lsa)
-    // Sizning saytda `uName` o'zgaruvchisi bor — undan olamiz
+    // 6) Foydalanuvchi ismi (agar saytga kiritgan bo'lsa)
     const userName =
       (typeof uName !== 'undefined' && uName) ? uName :
-      (localStorage.getItem('th_name')) ? localStorage.getItem('th_name') :
+      (localStorage.getItem('th_uname')) ? localStorage.getItem('th_uname') :
       'Anonim';
 
-    // 5) Firebase'ga yozish
-    // (sizning Firebase init kodingiz qaerdaligini bilmayman, lekin
-    //  ekrandan ko'rinishicha `firebase.database()` allaqachon ulangan)
+    // 7) Log ma'lumotlari
     const logData = {
-      name:    userName,
-      ip:      geo.ip || 'unknown',
-      country: geo.country_name || 'unknown',
-      city:    geo.city || 'unknown',
-      region:  geo.region || '',
-      isp:     geo.org || '',
-      browser: browser,
-      os:      os,
-      type:    type,
-      screen:  `${screen.width}x${screen.height}`,
-      lang:    navigator.language || '',
-      referrer:document.referrer || 'direct',
-      ts:      Date.now()
+      name:     userName,
+      ip:       geo.ip || 'unknown',
+      country:  geo.country_name || 'unknown',
+      city:     geo.city || 'unknown',
+      region:   geo.region || '',
+      isp:      geo.org || '',
+      browser:  browser,
+      os:       os,
+      type:     type,
+      screen:   screen.width + 'x' + screen.height,
+      lang:     navigator.language || '',
+      referrer: document.referrer || 'direct',
+      ts:       Date.now()
     };
 
-    firebase.database().ref('logs').push(logData);
+    // 8) Firebase'ga REST API orqali yozish (xuddi 'scores' kabi)
+    fetch(FB_URL + '/logs.json', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(logData)
+    });
 
-    // Sessiyada bir marta yozish uchun belgilash
     sessionStorage.setItem('th_logged', '1');
-
     console.log('✓ Visitor logged');
   } catch(e) {
     console.warn('Tracker error:', e.message);
