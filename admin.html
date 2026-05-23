@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06080f">
+<meta name="robots" content="noindex, nofollow">
+<title>TestHub Admin Panel</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background:#06080f; color:#e7ecff;
+  min-height:100vh;
+  padding:20px;
+}
+
+/* ── Parol oynasi ── */
+.login-overlay {
+  position:fixed; inset:0;
+  background:#06080f;
+  display:flex; align-items:center; justify-content:center;
+  z-index:1000;
+}
+.login-box {
+  background:#141828;
+  padding:36px 32px;
+  border-radius:18px;
+  border:1px solid #222842;
+  min-width:340px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.login-box h2 {
+  margin-bottom:6px; color:#5b7fff; font-size:22px;
+}
+.login-box .sub {
+  color:#6b7396; font-size:13px; margin-bottom:20px;
+}
+.login-box input {
+  width:100%; padding:13px;
+  background:#0f1320; color:#e7ecff;
+  border:1px solid #2d3454; border-radius:10px;
+  font-size:15px; margin-bottom:12px;
+  outline:none;
+}
+.login-box input:focus { border-color:#5b7fff; }
+.login-box button {
+  width:100%; padding:13px;
+  background:#5b7fff; color:white; border:none;
+  border-radius:10px; cursor:pointer; font-weight:600; font-size:15px;
+  transition:.2s;
+}
+.login-box button:hover { background:#3d5fe0; }
+.err { color:#ef4444; font-size:13px; margin-bottom:10px; }
+
+/* ── Asosiy UI ── */
+.main { display:none; max-width:1400px; margin:0 auto; }
+.header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:24px; flex-wrap:wrap; gap:12px;
+}
+.header h1 { color:#5b7fff; font-size:26px; }
+.header .meta { color:#6b7396; font-size:13px; }
+.logout-btn {
+  background:#222842; color:#e7ecff; border:none;
+  padding:8px 14px; border-radius:8px; cursor:pointer;
+  font-size:13px;
+}
+.logout-btn:hover { background:#2d3454; }
+
+/* Stat cards */
+.stats {
+  display:grid; gap:14px;
+  grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+  margin-bottom:24px;
+}
+.stat {
+  background:#141828; padding:18px; border-radius:14px;
+  border:1px solid #222842;
+}
+.stat-label {
+  font-size:11px; color:#6b7396;
+  text-transform:uppercase; letter-spacing:.5px;
+}
+.stat-value {
+  font-size:30px; font-weight:700; color:#e7ecff; margin-top:6px;
+}
+.stat-value.acc { color:#5b7fff; }
+.stat-value.grn { color:#10b981; }
+.stat-value.gold { color:#fbbf24; }
+.stat-value.red { color:#ef4444; }
+
+/* Tabs */
+.tabs {
+  display:flex; gap:8px; margin-bottom:16px;
+  border-bottom:1px solid #222842;
+}
+.tab {
+  background:none; color:#6b7396; border:none;
+  padding:10px 16px; cursor:pointer; font-size:14px;
+  border-bottom:2px solid transparent;
+}
+.tab.active { color:#5b7fff; border-bottom-color:#5b7fff; }
+.tab:hover { color:#e7ecff; }
+
+/* Controls */
+.controls {
+  background:#141828; padding:14px; border-radius:12px;
+  border:1px solid #222842; margin-bottom:14px;
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+}
+.controls input, .controls select {
+  background:#0f1320; color:#e7ecff;
+  border:1px solid #2d3454; border-radius:8px;
+  padding:9px 12px; font-size:14px;
+  outline:none;
+}
+.controls input { flex:1; min-width:200px; }
+.controls input:focus, .controls select:focus { border-color:#5b7fff; }
+.controls .count {
+  color:#6b7396; font-size:13px; margin-left:auto;
+}
+.refresh-btn {
+  background:#5b7fff; color:white; border:none;
+  padding:9px 14px; border-radius:8px; cursor:pointer;
+  font-size:13px; font-weight:600;
+}
+.refresh-btn:hover { background:#3d5fe0; }
+
+/* Table */
+.table-wrap {
+  background:#141828; border-radius:14px;
+  border:1px solid #222842; overflow:auto;
+  max-height:70vh;
+}
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td {
+  padding:11px 12px; text-align:left;
+  border-bottom:1px solid #222842; white-space:nowrap;
+}
+th {
+  background:#0f1320; color:#b8c0e8;
+  font-weight:600; font-size:11px;
+  text-transform:uppercase; letter-spacing:.5px;
+  position:sticky; top:0; z-index:5;
+}
+tr:hover td { background:#181d31; }
+tr.blocked-row td { opacity:.45; }
+
+.ip {
+  font-family:'JetBrains Mono', 'Consolas', monospace;
+  color:#22d3ee; font-size:12px;
+}
+.copyable { cursor:pointer; }
+.copyable:hover { text-decoration:underline; }
+.flag { display:inline-block; margin-right:6px; font-size:15px; }
+.btn-block {
+  background:#ef4444; color:white; border:none;
+  padding:5px 10px; border-radius:6px; cursor:pointer;
+  font-size:12px; font-weight:600;
+}
+.btn-block:hover { background:#dc2626; }
+.btn-block.unblock { background:#10b981; }
+.btn-block.unblock:hover { background:#059669; }
+.btn-del {
+  background:#6b7396; color:white; border:none;
+  padding:5px 10px; border-radius:6px; cursor:pointer;
+  font-size:12px; margin-left:4px;
+}
+.btn-del:hover { background:#4a5179; }
+
+.empty {
+  padding:50px; text-align:center; color:#6b7396;
+}
+.loading {
+  padding:50px; text-align:center; color:#6b7396;
+}
+
+/* Toast */
+.toast {
+  position:fixed; bottom:20px; right:20px;
+  background:#10b981; color:white;
+  padding:12px 18px; border-radius:10px;
+  font-size:14px; box-shadow:0 8px 32px rgba(0,0,0,.3);
+  transform:translateY(100px); opacity:0;
+  transition:.3s;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.err { background:#ef4444; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     1) PAROL OYNASI
+     ════════════════════════════════════════ -->
+<div class="login-overlay" id="login">
+  <div class="login-box">
+    <h2>🔐 Admin Panel</h2>
+    <div class="sub">TestHub Tahlil Paneli</div>
+    <div class="err" id="loginErr"></div>
+    <input type="password" id="pwd" placeholder="Parolingiz" autofocus autocomplete="off">
+    <button onclick="doLogin()">Kirish</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     2) ASOSIY UI
+     ════════════════════════════════════════ -->
+<div class="main" id="main">
+  <div class="header">
+    <h1>📊 TestHub Admin</h1>
+    <div style="display:flex; align-items:center; gap:12px">
+      <div class="meta" id="meta">Yuklanmoqda...</div>
+      <button class="logout-btn" onclick="doLogout()">Chiqish</button>
+    </div>
+  </div>
+
+  <!-- Statistika kartochkalari -->
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Jami tashriflar</div><div class="stat-value" id="s-total">—</div></div>
+    <div class="stat"><div class="stat-label">Noyob IP</div><div class="stat-value acc" id="s-uniq">—</div></div>
+    <div class="stat"><div class="stat-label">Bugun</div><div class="stat-value grn" id="s-today">—</div></div>
+    <div class="stat"><div class="stat-label">Mobil 📱</div><div class="stat-value" id="s-mob">—</div></div>
+    <div class="stat"><div class="stat-label">Kompyuter 💻</div><div class="stat-value" id="s-desk">—</div></div>
+    <div class="stat"><div class="stat-label">🚫 Bloklangan</div><div class="stat-value red" id="s-blocked">—</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('logs')" id="tab-logs">📋 Tashriflar</button>
+    <button class="tab" onclick="switchTab('blocked')" id="tab-blocked">🚫 Bloklangan IP'lar</button>
+  </div>
+
+  <!-- LOGS TAB -->
+  <div id="tab-content-logs">
+    <div class="controls">
+      <input id="search" placeholder="🔍 Qidirish: ism, IP, shahar, brauzer...">
+      <select id="filterType">
+        <option value="">Hammasi</option>
+        <option value="📱">📱 Mobil</option>
+        <option value="💻">💻 Kompyuter</option>
+      </select>
+      <select id="filterCountry"><option value="">Hamma davlatlar</option></select>
+      <button class="refresh-btn" onclick="loadData()">🔄 Yangilash</button>
+      <span class="count" id="count"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vaqt</th>
+            <th>Ism</th>
+            <th>IP</th>
+            <th>Davlat / Shahar</th>
+            <th>Provayder</th>
+            <th>Qurilma</th>
+            <th>Brauzer</th>
+            <th>OS</th>
+            <th>Amal</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="loading" id="loading">Yuklanmoqda...</div>
+      <div class="empty" id="empty" style="display:none">Hech qanday log topilmadi</div>
+    </div>
+  </div>
+
+  <!-- BLOCKED TAB -->
+  <div id="tab-content-blocked" style="display:none">
+    <div class="controls">
+      <span class="count">Bloklangan IP'lar ro'yxati</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>IP</th>
+            <th>Bloklangan vaqt</th>
+            <th>Amal</th>
+          </tr>
+        </thead>
+        <tbody id="blocked-rows"></tbody>
+      </table>
+      <div class="empty" id="blocked-empty" style="display:none">Hech qanday bloklangan IP yo'q</div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  ⚙️  SOZLAMALAR — sizning Firebase URL va parolingiz
+// ════════════════════════════════════════════════════════════
+const FB_URL = "https://testhub-1ef80-default-rtdb.firebaseio.com";
+const ADMIN_PASSWORD = "2022Shoh";
+// ════════════════════════════════════════════════════════════
+
+// ── PAROL OYNASI ─────────────────────────────────────────────
+function doLogin(){
+  const v = document.getElementById('pwd').value;
+  if (v === ADMIN_PASSWORD) {
+    sessionStorage.setItem('th_admin', '1');
+    showMain();
+  } else {
+    document.getElementById('loginErr').textContent = "Parol noto'g'ri";
+    document.getElementById('pwd').value = '';
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem('th_admin');
+  location.reload();
+}
+document.getElementById('pwd').addEventListener('keypress', e => {
+  if (e.key === 'Enter') doLogin();
+});
+// Avtomatik tekshirish: sessiyada parol bor bo'lsa to'g'ridan-to'g'ri kiradi
+if (sessionStorage.getItem('th_admin') === '1') showMain();
+
+function showMain(){
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('main').style.display = 'block';
+  loadData();
+  // Har 30 soniyada avtomatik yangilash
+  setInterval(loadData, 30000);
+}
+
+// ── TAB SWITCHING ────────────────────────────────────────────
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-content-logs').style.display    = name === 'logs'    ? 'block' : 'none';
+  document.getElementById('tab-content-blocked').style.display = name === 'blocked' ? 'block' : 'none';
+}
+
+// ── DATA ─────────────────────────────────────────────────────
+let allLogs = [];
+let blockedMap = {}; // { ipKey: {ip, blockedAt} }
+
+async function loadData(){
+  try {
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('rows').innerHTML = '';
+
+    // Parallel fetch
+    const [logsRes, blockedRes] = await Promise.all([
+      fetch(FB_URL + '/logs.json').then(r => r.json()),
+      fetch(FB_URL + '/blocked.json').then(r => r.json())
+    ]);
+
+    allLogs = Object.entries(logsRes || {})
+      .map(([id, log]) => ({id, ...log}))
+      .sort((a,b) => (b.ts||0) - (a.ts||0));
+
+    blockedMap = blockedRes || {};
+
+    document.getElementById('loading').style.display = 'none';
+    render();
+    renderBlocked();
+
+    document.getElementById('meta').textContent =
+      "So'nggi yangilanish: " + new Date().toLocaleTimeString();
+  } catch(e) {
+    document.getElementById('loading').textContent = "❌ Xatolik: " + e.message;
+    toast("Yuklashda xato: " + e.message, true);
+  }
+}
+
+function ipToKey(ip){
+  return ip.replace(/\./g,'_').replace(/:/g,'-');
+}
+
+async function blockIP(ip){
+  if (!confirm(ip + " IP'ni bloklash?\n\nBundan keyin bu IP saytga kira olmaydi.")) return;
+  const key = ipToKey(ip);
+  try {
+    await fetch(FB_URL + '/blocked/' + key + '.json', {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ip, blockedAt: Date.now()})
+    });
+    toast("IP bloklandi: " + ip);
+    loadData();
+  } catch(e) {
+    toast("Bloklashda xato: " + e.message, true);
+  }
+}
+
+async function unblockIP(ip){
+  if (!confirm(ip + " IP'ni blokdan chiqarish?")) return;
+  const key = ipToKey(ip);
+  try {
+    await fetch(FB_URL + '/blocked/' + key + '.json', {method: 'DELETE'});
+    toast("IP blokdan chiqarildi: " + ip);
+    loadData();
+  } catch(e) {
+    toast("Xato: " + e.message, true);
+  }
+}
+
+async function deleteLog(id){
+  if (!confirm("Bu logni o'chirib tashlashni xohlaysizmi?")) return;
+  try {
+    await fetch(FB_URL + '/logs/' + id + '.json', {method:'DELETE'});
+    toast("Log o'chirildi");
+    loadData();
+  } catch(e) {
+    toast("Xato: " + e.message, true);
+  }
+}
+
+// ── RENDER ───────────────────────────────────────────────────
+function render(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const tFilter = document.getElementById('filterType').value;
+  const cFilter = document.getElementById('filterCountry').value;
+
+  // Davlatlar dropdown'ini yangilash
+  const countries = [...new Set(allLogs.map(l => l.country).filter(c => c && c !== 'unknown'))].sort();
+  const csel = document.getElementById('filterCountry');
+  const cur = csel.value;
+  csel.innerHTML = '<option value="">Hamma davlatlar</option>' +
+    countries.map(c => `<option value="${c}">${c}</option>`).join('');
+  csel.value = cur;
+
+  const blockedIPs = new Set(Object.values(blockedMap).map(b => b.ip));
+
+  // Filtrlash
+  const filtered = allLogs.filter(l => {
+    if (tFilter && l.type !== tFilter) return false;
+    if (cFilter && l.country !== cFilter) return false;
+    if (q) {
+      const hay = [l.name, l.ip, l.city, l.country, l.browser, l.os, l.isp]
+        .join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  // Statistika
+  const uniq = new Set(allLogs.map(l => l.ip).filter(Boolean)).size;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayCount = allLogs.filter(l => (l.ts||0) >= today.getTime()).length;
+  const mob = allLogs.filter(l => l.type === '📱').length;
+  const desk = allLogs.filter(l => l.type === '💻').length;
+
+  document.getElementById('s-total').textContent = allLogs.length;
+  document.getElementById('s-uniq').textContent = uniq;
+  document.getElementById('s-today').textContent = todayCount;
+  document.getElementById('s-mob').textContent = mob;
+  document.getElementById('s-desk').textContent = desk;
+  document.getElementById('s-blocked').textContent = blockedIPs.size;
+  document.getElementById('count').textContent =
+    filtered.length + ' / ' + allLogs.length + " ko'rsatilmoqda";
+
+  // Jadval
+  const tbody = document.getElementById('rows');
+  document.getElementById('empty').style.display = filtered.length ? 'none' : 'block';
+  tbody.innerHTML = filtered.map(l => {
+    const d = new Date(l.ts || 0);
+    const dStr = d.toLocaleString('uz-UZ', {hour12:false}).replace(',','');
+    const ip = l.ip || 'unknown';
+    const isBlocked = blockedIPs.has(ip);
+    const flag = countryFlag(l.country);
+    const btn = isBlocked
+      ? `<button class="btn-block unblock" onclick="unblockIP('${ip}')">Ochish</button>`
+      : `<button class="btn-block" onclick="blockIP('${ip}')">Bloklash</button>`;
+    return `<tr class="${isBlocked?'blocked-row':''}">
+      <td>${dStr}</td>
+      <td><b>${esc(l.name||'—')}</b></td>
+      <td class="ip copyable" onclick="copyText('${ip}')" title="Nusxa olish uchun bosing">${ip}</td>
+      <td>${flag}${esc(l.country||'?')} / ${esc(l.city||'?')}</td>
+      <td>${esc(l.isp||'—')}</td>
+      <td style="text-align:center">${l.type||''}</td>
+      <td>${esc(l.browser||'—')}</td>
+      <td>${esc(l.os||'—')}</td>
+      <td>${btn}<button class="btn-del" onclick="deleteLog('${l.id}')" title="O'chirish">🗑</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderBlocked(){
+  const tbody = document.getElementById('blocked-rows');
+  const items = Object.entries(blockedMap)
+    .map(([key, b]) => ({key, ...b}))
+    .sort((a,b) => (b.blockedAt||0) - (a.blockedAt||0));
+  document.getElementById('blocked-empty').style.display = items.length ? 'none' : 'block';
+  tbody.innerHTML = items.map(b => {
+    const d = new Date(b.blockedAt || 0);
+    const dStr = d.toLocaleString('uz-UZ', {hour12:false}).replace(',','');
+    return `<tr>
+      <td class="ip">${b.ip}</td>
+      <td>${dStr}</td>
+      <td><button class="btn-block unblock" onclick="unblockIP('${b.ip}')">Blokdan chiqarish</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── UTILITY ──────────────────────────────────────────────────
+function esc(s){
+  return String(s||'').replace(/[<>&"']/g, c =>
+    ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function countryFlag(c){
+  const flags = {
+    'Uzbekistan':'🇺🇿', 'Russia':'🇷🇺', 'Kazakhstan':'🇰🇿',
+    'Kyrgyzstan':'🇰🇬', 'Tajikistan':'🇹🇯', 'Turkmenistan':'🇹🇲',
+    'United States':'🇺🇸', 'Turkey':'🇹🇷', 'China':'🇨🇳',
+    'Germany':'🇩🇪', 'United Kingdom':'🇬🇧', 'Ukraine':'🇺🇦',
+    'India':'🇮🇳', 'Japan':'🇯🇵', 'South Korea':'🇰🇷',
+    'France':'🇫🇷', 'Italy':'🇮🇹', 'Spain':'🇪🇸',
+    'Saudi Arabia':'🇸🇦', 'Iran':'🇮🇷', 'Afghanistan':'🇦🇫',
+    'Pakistan':'🇵🇰', 'Belarus':'🇧🇾', 'Azerbaijan':'🇦🇿',
+    'Georgia':'🇬🇪', 'Armenia':'🇦🇲'
+  };
+  return `<span class="flag">${flags[c] || '🌍'}</span>`;
+}
+
+function copyText(t){
+  navigator.clipboard.writeText(t);
+  toast("Nusxalandi: " + t);
+}
+
+let toastTimer = null;
+function toast(msg, isErr=false){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (isErr ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, 2500);
+}
+
+// Search input listeners
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filterType').addEventListener('change', render);
+document.getElementById('filterCountry').addEventListener('change', render);
+</script>
+</body>
+</html>
