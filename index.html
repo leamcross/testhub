@@ -3310,5 +3310,77 @@ document.addEventListener("keydown", e=>{
   if(e.key==="Escape" && $("mbd").classList.contains("on")) $("m-no").click();
 });
 </script>
+  <!-- ════════════════════════════════════════
+     VISITOR TRACKING (Firebase Realtime DB)
+     ════════════════════════════════════════ -->
+<script>
+(async function trackVisitor(){
+  try {
+    // Faqat bir marta sessiya davomida log yozish
+    if (sessionStorage.getItem('th_logged')) return;
+
+    // 1) IP va geolocation (bepul, ro'yxat shart emas)
+    const geo = await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({}));
+
+    // 2) Brauzer va OS aniqlash
+    const ua = navigator.userAgent;
+    const browser =
+      /Edg\//.test(ua) ? 'Edge' :
+      /OPR\//.test(ua) ? 'Opera' :
+      /Chrome\//.test(ua) && !/Edg/.test(ua) ? 'Chrome' :
+      /Firefox\//.test(ua) ? 'Firefox' :
+      /Safari\//.test(ua) && !/Chrome/.test(ua) ? 'Safari' :
+      'Other';
+
+    const os =
+      /Windows NT 10/.test(ua) ? 'Windows 10/11' :
+      /Windows/.test(ua) ? 'Windows' :
+      /Android/.test(ua) ? 'Android' :
+      /iPhone|iPad|iPod/.test(ua) ? 'iOS' :
+      /Mac OS/.test(ua) ? 'macOS' :
+      /Linux/.test(ua) ? 'Linux' :
+      'Other';
+
+    // 3) Mobil/desktop emoji
+    const isMobile = /Mobi|Android|iPhone|iPad/.test(ua);
+    const type = isMobile ? '📱' : '💻';
+
+    // 4) Foydalanuvchi ismi (agar saytda kiritgan bo'lsa)
+    // Sizning saytda `uName` o'zgaruvchisi bor — undan olamiz
+    const userName =
+      (typeof uName !== 'undefined' && uName) ? uName :
+      (localStorage.getItem('th_name')) ? localStorage.getItem('th_name') :
+      'Anonim';
+
+    // 5) Firebase'ga yozish
+    // (sizning Firebase init kodingiz qaerdaligini bilmayman, lekin
+    //  ekrandan ko'rinishicha `firebase.database()` allaqachon ulangan)
+    const logData = {
+      name:    userName,
+      ip:      geo.ip || 'unknown',
+      country: geo.country_name || 'unknown',
+      city:    geo.city || 'unknown',
+      region:  geo.region || '',
+      isp:     geo.org || '',
+      browser: browser,
+      os:      os,
+      type:    type,
+      screen:  `${screen.width}x${screen.height}`,
+      lang:    navigator.language || '',
+      referrer:document.referrer || 'direct',
+      ts:      Date.now()
+    };
+
+    firebase.database().ref('logs').push(logData);
+
+    // Sessiyada bir marta yozish uchun belgilash
+    sessionStorage.setItem('th_logged', '1');
+
+    console.log('✓ Visitor logged');
+  } catch(e) {
+    console.warn('Tracker error:', e.message);
+  }
+})();
+</script>
 </body>
 </html>
